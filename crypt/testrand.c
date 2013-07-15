@@ -35,7 +35,7 @@ int main(int N, char ** S)
 {
 	unsigned char	gseed[SEED_TOTAL], * ptr ;
 	unsigned char	gdata[TEST_BLOCK] ;
-	int istep, iret, ival ;
+	int istep, ival ;
 
 	if ( read_devrand(gseed, SEED_RAND)) { exit( 1) ; }
 
@@ -51,10 +51,11 @@ int main(int N, char ** S)
 #endif
 
 	RAND_seed(gseed, ( ptr - gseed )) ;
-	if (! RAND_status()) { fprintf(stderr, "RAND not initialized\n") ;  exit( 1) ; }
+	if (! RAND_status())
+		{ fprintf(stderr, "RAND not initialized\n") ;  exit( 1) ; }
 
-	iret= RAND_bytes(gdata, TEST_BLOCK) ;
-	if ( ! iret ) { fprintf(stderr, "RAND bytes failed\n") ;  exit( 1) ; }
+	if ( ! RAND_bytes(gdata, TEST_BLOCK) )
+		{ fprintf(stderr, "RAND bytes failed\n") ;  exit( 1) ; }
 
 	for ( istep= TEST_BLOCK, ptr= gdata ; ( istep -- ) ; ptr ++ )
 		{ printf("%02x", * ptr ) ; }
@@ -62,5 +63,4 @@ int main(int N, char ** S)
 
 	return 0 ;
 }
-
 
