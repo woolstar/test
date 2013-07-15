@@ -4,6 +4,16 @@
 #include <time.h>
 #include <openssl/rand.h>
 
+	// magic numbers
+#define	SEED_RAND	64
+#define	SEED_PID	2
+#define	SEED_UID	2
+#define	SEED_NANO	4
+
+#define	SEED_TOTAL	(SEED_RAND + SEED_PID + SEED_UID + SEED_NANO)
+
+#define	TEST_BLOCK	8
+
 	int	read_devrand(unsigned char * abuf, int asize)
 	{
 		FILE * fsrc= fopen("/dev/urandom", "rb") ;
@@ -18,17 +28,8 @@
 		return 1; 
 	}
 
-	#define	PACK2(xx, val)	*(xx ++)= (0xff & val) ;  *(xx ++)= (0xff & ( val >> 8 )) 
-	#define PACK4(xx, val)  PACK2(xx, val) ;  val >>= 16 ;  PACK2(xx, val) 
-
-	#define	SEED_RAND	64
-	#define	SEED_PID	2
-	#define	SEED_UID	2
-	#define	SEED_NANO	4
-
-	#define	SEED_TOTAL	(SEED_RAND + SEED_PID + SEED_UID + SEED_NANO)
-
-	#define	TEST_BLOCK	8
+#define	PACK2(xx, val)	*(xx ++)= (0xff & val) ;  *(xx ++)= (0xff & ( val >> 8 )) 
+#define PACK4(xx, val)  PACK2(xx, val) ;  val >>= 16 ;  PACK2(xx, val) 
 
 int main(int N, char ** S)
 {
