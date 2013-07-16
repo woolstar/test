@@ -2,12 +2,12 @@
 CC=gcc
 CFLAGS= -g
 
-base85: base85.c asc85.o
+base85r: base85.c asc85.o
 	$(CC) $(CFLAGS) $< -o $@
 
 test: test.c asc85.o
 	$(CC) $(CFLAGS) $< asc85.o -o $@
 
 clean:
-	rm -fr test base85
+	rm -fr test base85r
 
