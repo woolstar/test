@@ -1,0 +1,9 @@
+# Objects/Libs
+*.o
+*.lib
+*.a
+
+# Misc
+*.dll
+*.so
+*.exe
