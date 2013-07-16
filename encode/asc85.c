@@ -93,8 +93,8 @@ void	encode_asc85(char * zbuf, int asz, const unsigned char * asrc, int alen)
 
 	for (zfill= zbuf ; (( alen & ~3 ) && ( asz >= 5 )) ; alen -= 4 )
 	{
-		lval= * asrc ;  lval <<= 8 ; lval |= * asrc ;  lval <<= 8 ;
-		lval |= * asrc ;  lval <<= 8 ; lval |= * asrc ;  lval <<= 8 ;
+		lval= * (asrc ++) ;  lval <<= 8 ; lval |= * (asrc ++) ;  lval <<= 8 ;
+		lval |= * (asrc ++) ;  lval <<= 8 ; lval |= * (asrc ++) ;
 
 		;
 		for ( p= pack_a85( lval); ( * (zfill ++)= *( p ++) ) ; -- asz ) { }
@@ -145,7 +145,7 @@ int		decode_asc85(unsigned char * zdest, int asz, const char * asrc)
 		lval= unpack_a85x( asrc, &ival ) ;
 		asrc += ival ;
 		if ( ival < 2 ) return -1 ;
-		for ( istep= 32 ; ( istep && asz ) ; -- asz ) { istep -= 8 ;  *(zfill ++)= 0xff & ( lval >> istep ) ; }
+		for ( istep= 32, ival -- ; ( istep && ival && asz ) ; -- ival, -- asz ) { istep -= 8 ;  *(zfill ++)= 0xff & ( lval >> istep ) ; }
 	}
 
 	return ( zfill - zdest ) ;
