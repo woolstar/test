@@ -103,7 +103,7 @@ void	encode_asc85(char * zbuf, int asz, const unsigned char * asrc, int alen)
 	if ( alen && ! ( alen & ~3 ) && ( asz >= ( alen +1 )))	// there's a fragment left, and still space
 	{
 			// pack 1,2 or 3 bytes
-		lval= * (asrc ++) << 24 ;
+		lval= * (asrc ++) * (1L << 24) ;
 		switch ( alen )
 		{
 			case 3:
