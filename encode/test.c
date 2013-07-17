@@ -54,9 +54,17 @@ int main(int N, char ** S)
 	for (lval= 0xffffff; ( lval > step ) ; lval -= step ) { check( lval, 3) ; }
 	puts("3.") ;
 
-	for (lval= 0, lmax= 0xffffffff - (2 * step) ; ( lval < lmax ) ; lval += step ) { check( lval, 4) ; }
-	puts("4 up.") ;
-	for (lval= 0xffffffff; ( lval > step ) ; lval -= step ) { check( lval, 4) ; }
-	puts("4 down.") ;
+	if ( step > 1 )
+	{
+		for (lval= 0, lmax= 0xffffffff - (2 * step) ; ( lval < lmax ) ; lval += step ) { check( lval, 4) ; }
+		puts("4 up.") ;
+		for (lval= 0xffffffff; ( lval > step ) ; lval -= step ) { check( lval, 4) ; }
+		puts("4 down.") ;
+	}
+	else
+	{
+		for (lval= 0, lmax= 0xffffffff ; ( lval < lmax ) ; lval ++ ) { check( lval, 4) ; }
+		puts(".") ;
+	}
 }
 
