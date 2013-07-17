@@ -9,5 +9,5 @@ test: test.c asc85.o
 	$(CC) $(CFLAGS) $< asc85.o -o $@
 
 clean:
-	rm -fr test base85r
+	rm -fr test base85r *.o
 
