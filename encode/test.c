@@ -10,10 +10,11 @@
 	static void	check(unsigned long aval, int alen)
 	{
 		int iret, istep ;
+		unsigned long ltmp ;
 		unsigned char	ibuf[8], obuf[8], * uptr, * uchk ;
 		char encbuf[8] ;
 
-		for ( istep= alen, uptr= ibuf ; (istep -- ) ; aval >>= 8 ) { *(uptr ++)= 0xff & aval ; }
+		for ( istep= alen, uptr= ibuf, ltmp= aval ; (istep -- ) ; ltmp >>= 8 ) { *(uptr ++)= 0xff & ltmp ; }
 		encode_asc85( encbuf, sizeof(encbuf), ibuf, alen) ;
 		if ( ! * encbuf || strchr( encbuf, '/' ))
 			{ perror("encode failed") ;  exit( 1) ; }
@@ -24,7 +25,7 @@
 
 		for ( istep= alen, uptr= ibuf, uchk= obuf ; ( istep && ( * uptr == * uchk ) ) ; istep --, uptr ++, uchk ++ ) { }
 		if ( istep )
-			{ fprintf(stderr, "contents mismatch (%ld) (%s)", aval, encbuf) ;  exit( 3) ; }
+			{ fprintf(stderr, "contents mismatch (%ld:%d) (%s)", aval, alen, encbuf) ;  exit( 3) ; }
 	}
 
 
