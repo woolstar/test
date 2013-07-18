@@ -58,7 +58,7 @@
 		{
 			imove= ( rec-> cur - rec-> base ) - asz ;
 			memmove( rec-> base, rec-> base + asz, imove) ;
-			rec-> cur= rec-> base + asz ;
+			rec-> cur= rec-> base + imove ;
 		}
 	}
 
@@ -93,10 +93,7 @@
 		pop( &holdrec, ( ptr - SPbase( holdrec) ) ) ;
 
 		if ( ! alen && SPsize( holdrec) )
-		{
-			fwrite( SPbase( holdrec), sizeof(char), SPsize( holdrec), stdout) ;
-			fprintf(stdout, "\n") ;
-		}
+			{ fwrite( SPbase( holdrec), sizeof(char), SPsize( holdrec), stdout) ; }
 	}
 
 void	doencode(FILE * fin)
@@ -107,6 +104,7 @@ void	doencode(FILE * fin)
 		{ compile( datbuf, iret) ; }
 
 	compile( NULL, 0) ;
+	fprintf(stdout, "\n") ;
 }
 
 void	dodecode(FILE * fin)
