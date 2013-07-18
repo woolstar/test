@@ -83,7 +83,7 @@ unsigned long   unpack_a85x( const char * astr, int * alen )	// pack with fragme
 
 void	encode_asc85(char * zbuf, int asz, const unsigned char * asrc, int alen)
 {
-	char * zfill ;
+	char c, * zfill ;
 	const char * p ;
 	unsigned long lval ;
 	int istep ;
@@ -97,7 +97,7 @@ void	encode_asc85(char * zbuf, int asz, const unsigned char * asrc, int alen)
 		lval |= * (asrc ++) ;  lval <<= 8 ; lval |= * (asrc ++) ;
 
 		;
-		for ( p= pack_a85( lval); ( * (zfill ++)= *( p ++) ) ; -- asz ) { }
+		for ( p= pack_a85( lval); ( c= *( p ++) ) ; -- asz ) { *( zfill ++)= c ; }
 	}
 
 	if ( alen && ! ( alen & ~3 ) && ( asz >= ( alen +1 )))	// there's a fragment left, and still space
