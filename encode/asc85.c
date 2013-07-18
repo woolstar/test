@@ -54,7 +54,7 @@ unsigned long   unpack_a85( const char * astr)
 
 	if ( '.' == * astr ) return 0 ;
 
-	for (istep= 5, lval= 0; ( * astr && ( istep -- )) ; )
+	for (istep= 5, lval= 0; ( * astr && istep ) ; istep -- )
 		{ lval *= 85, lval += dascii85[ 0x7f & * ( astr ++)] ; }
 	if ( istep ) {
 			// trim out for short messages
@@ -70,7 +70,7 @@ unsigned long   unpack_a85x( const char * astr, int * alen )	// pack with fragme
 	long lval ;
 	int istep, itrim ;
 
-	for (istep= 5, lval= 0; ( * astr && ( istep -- )) ; )
+	for (istep= 5, lval= 0; ( * astr && istep ) ; istep -- )
 		{ lval *= 85, lval += dascii85[ 0x7f & * ( astr ++)] ; }
 	if ( alen ) { * alen= ( 5 - istep ) ; }
 	if ( istep ) {
