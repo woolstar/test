@@ -1,7 +1,7 @@
 #!/usr/bin/perl -s
 
-	my $rotator= "|/-\\" ;
-	my $subrotator= ".,;" ;
+	my $rotator= "|/-\\|" ;
+	my $subrotator= ".,;:" ;
 
 	use 5.012 ;
 
@@ -31,15 +31,14 @@ sub countdown
 			when ( $_ > 600 )
 			{
 				print " " ;
-				for ( 0..3 ) { sleep(60) ;  print "\b" . substr($rotator, $_, 1) }
-				sleep( 60) ;
+				for ( 0..4 ) { sleep(60) ;  print "\b" . substr($rotator, $_, 1) }
 				$t -= 300 ;
 				$sbars .= "|" ;
 			}
 			when ( $_ > 60 )
 			{
 				print " " ;
-				for ( 0..2 ) { sleep(20) ;  print "\b" . substr($subrotator, $_, 1) }
+				for ( 0..3 ) { sleep(15) ;  print "\b" . substr($subrotator, $_, 1) }
 				$t -= 60 ;
 				$sbars .= ':' ;
 			}
