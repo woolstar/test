@@ -151,3 +151,32 @@ int		decode_asc85(unsigned char * zdest, int asz, const char * asrc)
 	return ( zfill - zdest ) ;
 }
 
+int		decode_asc85x(unsigned char * zdest, int asz, const char * asrc, int * zuse)
+{
+	int istep, ival ;
+	unsigned long lval ;
+	const char * ptr= asrc ;
+	unsigned char * zfill= zdest ;
+
+	if ( ! zdest || ! asz || ! asrc ) return -1 ;
+	while (( asz > 4 ) && * ptr )
+	{
+		if ( '.' == * ptr ) {
+			ptr ++ ;
+			for ( istep= 4 ; ( istep -- && asz ) ; -- asz ) { *(zfill ++)= 0 ; }
+			continue ;
+		}
+
+		lval= unpack_a85x( ptr, &ival ) ;
+		if ( ival < 5 ) break ;
+		*(zfill ++)= 0xff & ( lval >> 24 ) ;
+		*(zfill ++)= 0xff & ( lval >> 16 ) ;
+		*(zfill ++)= 0xff & ( lval >> 8 ) ;
+		*(zfill ++)= 0xff & lval ;
+		ptr += ival ;
+	}
+
+	if ( zuse ) { * zuse= ( ptr - asrc ) ; }
+	return ( zfill - zdest ) ;
+}
+
