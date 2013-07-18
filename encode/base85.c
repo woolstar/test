@@ -107,8 +107,18 @@ void	doencode(FILE * fin)
 	fprintf(stdout, "\n") ;
 }
 
+	static void	decompile( const char * abuf )
+	{
+	}
+
 void	dodecode(FILE * fin)
 {
+	int iret ;
+
+	while ( iret= fread( datbuf, sizeof(unsigned char), WINDOWSZ -1, fin))
+		{ daztbuf[iret]= '\0' ;  decompile( datbuf) ; }
+
+	decompile( NULL) ;
 }
 
 	////
