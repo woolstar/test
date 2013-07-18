@@ -36,9 +36,17 @@
 		rec-> cur += asz ;
 		return asz ;
 	}
+	static int		step(struct StringPTR * rec, int asz )
+	{
+		if ( rec-> cur + asz > rec-> limit ) { return -1 ; }
+		rec-> cur += asz ;
+		return asz ;
+	}
 
 #define	SPsize(rec) ( rec.cur - rec.base )
+#define	SPfree(rec)	( rec.limit - rec.cur )
 #define	SPptr(rec) ( rec.cur )
+#define SPbase(rec) ( rec.base )
 
 	static void		pop(struct StringPTR * rec, int asz)
 	{
@@ -56,8 +64,49 @@
 
 	////
 
+	static void	compile( const unsigned char * abuf, int alen)
+	{
+		char * ptr, * pfill ;
+		int itarg, isz, iuse, idlim, iduse ;
+
+		if ( alen )
+		{
+			ptr= SPptr( holdrec) ;
+			encode_asc85( ptr, SPfree( holdrec), abuf, alen) ;
+			if ( ! wrap ) { fputs( ptr, stdout) ; }
+				else { if ( -1 == step( &holdrec, strlen( ptr)) ) { fprintf(stderr, "buffer overflow\n") ;  exit( 8) ; } }
+		}
+
+		if ( ! wrap ) { return ; }
+		if ( wrap % 5 ) { itarg= 5 * wrap ; } else { itarg= wrap ; }
+		if ( itarg > ( STRINGSZ / 2 )) { fprintf(stderr, "wrap too large\n") ;  exit( 8) ; }
+
+		idlim= STRINGSZ, iduse= 0, pfill= strbuf ;
+		for ( ptr= SPbase( holdrec), isz= SPsize( holdrec) ; ( isz > itarg ) ; )
+		{
+			if (( 1 + wrap + iduse ) > idlim ) { fwrite( strbuf, sizeof(char), iduse, stdout) ;  pfill= strbuf, iduse= 0 ; }
+			memcpy( pfill, ptr, wrap) ;  ptr += wrap ;  isz -= wrap ;
+			pfill += wrap ;  *(pfill ++)= '\n' ;  iduse += ( wrap + 1 ) ;
+		}
+
+		if ( iduse ) { fwrite( strbuf, sizeof(char), iduse, stdout) ; }
+		pop( &holdrec, ( ptr - SPbase( holdrec) ) ) ;
+
+		if ( ! alen && SPsize( holdrec) )
+		{
+			fwrite( SPbase( holdrec), sizeof(char), SPsize( holdrec), stdout) ;
+			fprintf(stdout, "\n") ;
+		}
+	}
+
 void	doencode(FILE * fin)
 {
+	int iret ;
+
+	while ( iret= fread( datbuf, sizeof(unsigned char), WINDOWSZ, fin))
+		{ compile( datbuf, iret) ; }
+
+	compile( NULL, 0) ;
 }
 
 void	dodecode(FILE * fin)
