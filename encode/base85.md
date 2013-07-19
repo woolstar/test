@@ -1,11 +1,11 @@
 
-#### base85r
+#### base85
 
 Ascii85 encoding/decoding using the RFC 1924 alphabet (safe for code strings).
 
 Usage:
 
-	base85r [-w N] [-d] [-i] [FILE]
+	base85 [-w N] [-d] [-i] [FILE]
 
 Options:
 

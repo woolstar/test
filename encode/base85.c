@@ -210,7 +210,7 @@ int main(int N, char ** S)
 			default:
 				fprintf(stderr, "unknown argument %s\n", * S) ;
 			case '?':
-				fprintf(stderr, "USAGE: base85r [-d] [-w N] [-i] [-t] [FILE]\n") ;
+				fprintf(stderr, "USAGE: base85 [-d] [-w N] [-i] [-t] [FILE]\n") ;
 				exit( 1) ;
 		}
 		N --, S ++ ;
