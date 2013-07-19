@@ -12,15 +12,15 @@ See this [wiki page](http://en.wikipedia.org/wiki/Ascii85) for the background.
 
 Ways to use:
 
-	* asc85.c
+* asc85.c
 
-	A set of C routines for packing and unpacking longs, and higher level routines for unpacking/packing buffers.
+A set of C routines for packing and unpacking longs, and higher level routines for unpacking/packing buffers.
 
-	* test.c
+* test.c
 
-	A test framework to verify operation.
+A test framework to verify operation.
 
-	* base85.c
+* base85.c
 
-	A command line tool for encoding/decoding ascii85 (rfc) streams.  See [base85.md](base85.md) for usage.
+A command line tool for encoding/decoding ascii85 (rfc) streams.  See [base85.md](base85.md) for usage.
 
