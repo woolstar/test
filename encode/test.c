@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include <sys/fcntl.h>
 
 #include "asc85.h"
 
@@ -63,34 +62,44 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 		}
 	}
 
+#define		NUMTESTS 100000
+
 	static void	test_random(void)
 	{
-		int itotal, istep, rdata, ilen ;
+		int isize, istep, ilen ;
 		unsigned char rndval; 
-		
-		rdata = open( "/dev/random", O_RDONLY);
-		read( rdata, &rndval, sizeof(rndval));
+		FILE *rdata;
 
-		itotal = MAXTEST - rndval;
-		for ( istep = itotal; (istep --) ;) {
-			read( rdata, srcbuf, sizeof(itotal));
+		rdata = fopen( "/dev/urandom", "rb");
+			if ( !rdata ) { fprintf(stderr, "error opening /dev/urandom for reading") ; exit( 7) ; }
 
-			encode_asc85( encbuf, itotal, srcbuf, itotal);
-			ilen = decode_asc85( finalbuf, itotal, encbuf);
+		//Perform set # of tests
+		for( istep = NUMTESTS ; (istep -- ); ) {
+
+			//Read a random block size
+			fread( &rndval, sizeof(rndval), 1, rdata);
+			isize = MAXTEST - rndval;
+			fread( srcbuf, sizeof(isize), 1, rdata);
+
+			//Enc/dec the block
+			encode_asc85( encbuf, sizeof(encbuf), srcbuf, isize);
+			ilen = decode_asc85( decbuf, sizeof(decbuf), encbuf);
 				if ( ilen < 1 ) { fprintf(stderr, "random decode failed.\n") ; exit( 7) ; }
 
-			if ( compare_buff( finalbuf, srcbuf, itotal) ) { 
+			//Test the results
+			if ( compare_buff( decbuf, srcbuf, isize) ) { 
 				fprintf(stderr, "random encode/decode failed.\n") ; 
 
-				close( rdata);
-				rdata = open( "rfailed.data", O_RDWR);
-				write( rdata, srcbuf, itotal);
-				close( rdata);
+				//Write out the block that 
+				fclose( rdata);
+				rdata = fopen( "rfailed.data", "rwb");
+				fwrite( srcbuf, isize, 1, rdata);
+				fclose( rdata);
 
 				exit( 7);
 			}
 		}
-		close( rdata);
+		fclose( rdata);
 	}
 
 
