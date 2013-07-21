@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/fcntl.h>
 
 #include "asc85.h"
 
@@ -63,15 +66,24 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 
 	static void	test_random(void)
 	{
-		int istep ;
+		int itotal, istep, rdata, ilen ;
 		unsigned char rndval; 
-		int rdata = open ( "/dev/random", O_RDONLY);
-		read ( rdata, &rndval, sizeof(rndval));a
 
-		for ( istep = MAXTEST - rndval, (istep --) ;) {
+		
+		
+		rdata = open( "/dev/random", O_RDONLY);
+		read( rdata, &rndval, sizeof(rndval));
 
-			
+		itotal = MAXTEST - rndval;
+		for ( istep = itotal; (istep --) ;) {
+			read( rdata, srcbuf, sizeof(itotal));
 
+			encode_asc85( encbuf, itotal, srcbuf, itotal);
+			ilen = decode_asc85( finalbuf, itotal, encbuf);
+				if ( ilen < 1 ) { fprintf(stderr, "random decode failed.\n") ; exit( 7) ; }
+
+			if ( compare_buff( finalbuf, srcbuf, itotal) )
+				{ fprintf(stderr, "random encode/decode failed.\n") ; exit( 7) ; }
 		}
 	}
 
