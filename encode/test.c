@@ -7,11 +7,17 @@
 
 	int step= 7 ;
 
+	static void	compare_buff(unsigned char * abuf1, unsigned char * abuf2, int alen)
+	{
+		while ( alen && abuf1 && abuf2 && ( * abuf1 == * abuf2 )) { alen --, abuf1 ++, abuf2 ++ ; }
+		return alen ;
+	}
+
 	static void	check(unsigned long aval, int alen)
 	{
 		int iret, istep ;
 		unsigned long ltmp ;
-		unsigned char	ibuf[8], obuf[8], * uptr, * uchk ;
+		unsigned char	ibuf[8], obuf[8], * uptr ;
 		char encbuf[8] ;
 
 		for ( istep= alen, uptr= ibuf, ltmp= aval ; (istep -- ) ; ltmp >>= 8 ) { *(uptr ++)= 0xff & ltmp ; }
@@ -23,8 +29,7 @@
 		if ( iret != alen )
 			{ perror("decode length mismatch") ;  exit( 2) ; }
 
-		for ( istep= alen, uptr= ibuf, uchk= obuf ; ( istep && ( * uptr == * uchk ) ) ; istep --, uptr ++, uchk ++ ) { }
-		if ( istep )
+		if ( compare_buff( ibuf, obuf, alen ) )
 			{ fprintf(stderr, "contents mismatch (%ld:%d) (%s)", aval, alen, encbuf) ;  exit( 3) ; }
 	}
 
@@ -47,7 +52,6 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 
 		for ( test= &testlist[0] ; ( ** test ) ; ++ test )
 		{
-			printf("hi %s\n", * test) ;
 		}
 	}
 
