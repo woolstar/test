@@ -45,6 +45,7 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 				"helloworld",
 				"HTTaaaaaaaaaaaaaaaaaaaabbccccccccdddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffffgggghhhhhhhhhhhhhiiiiiiiiiiiiillllllmmmmnnnnnnnnnnnnnnnooooooooooooppppprrrrrrrrrrsssssssssssssstttttttttttttttttttttttuuuuuuuuuuvvwwwwxyyyyy",
 				"nreoe2neatYteor4ri7eeoi7s5se2h2oafnpet4ohhsactdoetro2tos22fete7UeiumvooseirihpgtansteunrtloowrecrrmolmtSnoneuvoioi7rehesdtt9eeeo3rhoLawt41bpnTi1iinrlreinrt1nwnrem4ivlslghR26hdtitbnr5RomyeawhtoeT3nevsctet2egw1apo379rih7fi3aqgvoi3vtrteiTttvwTmsInbSfmstbtoUi2lecotdeiiseso73ogrMr2sor4eeeclrtisewftiegac3lAcrcerfeeoEahtehoebnnpweS1o2hatttffNHnmt4m5sptginemAittlUc7rnc7iehernmInftdewhunuroTldihe51idrelxoaetlftrC4hepasat7gste2mtpsttr3aivlods5xasnoemfairreafdo2opbne3tclmlfolauenq2ePoonbnmoiae33Titlrnyf92tieoityeirllLEws1hLo4iaeiGoUifen2txi2t1ehttndsnvneosyE9d8us9ef14nrSuotteinfs747nw7iedeohg2o7atsocr2yxhic2qarlhwEpt2i3rsxUmefUmeaisc4hnhenonwetihfnCtfrwolt2rlK",
+				"ABzY8f_3Xr0s~D?%L;-(6x|Q_55w$rk~UG-0Yk$;3BpZFv0D>3j_FnF@6&A2@;o>XNb)RIki=o6z#tV|6E!YA`^ON7($<7Ex%6&O@E-~U;ftguQ|(G!v>j5=)6Lxo#UMZCX{^>OpJ#T!E69Zaxisug(PeTa{=a2HEZ4}dw(QMRz;)4aGiwY&o}A-DAm&wDDaUd2?$+Kb^h#@_P#RkV87j|VAiwET-h9bnAHWJz4BG$z00",
 				"",	// sentinal -- end of tests
 			} ;
 
