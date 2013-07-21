@@ -23,11 +23,11 @@
 		for ( istep= alen, uptr= ibuf, ltmp= aval ; (istep -- ) ; ltmp >>= 8 ) { *(uptr ++)= 0xff & ltmp ; }
 		encode_asc85( encbuf, sizeof(encbuf), ibuf, alen) ;
 		if ( ! * encbuf || strchr( encbuf, '/' ))
-			{ perror("encode failed") ;  exit( 1) ; }
+			{ fprintf(stderr, "encode failed") ;  exit( 1) ; }
 
 		iret= decode_asc85(obuf, sizeof(obuf), encbuf) ;
 		if ( iret != alen )
-			{ perror("decode length mismatch") ;  exit( 2) ; }
+			{ fprintf(stderr, "decode length mismatch") ;  exit( 2) ; }
 
 		if ( compare_buff( ibuf, obuf, alen ) )
 			{ fprintf(stderr, "contents mismatch (%ld:%d) (%s)", aval, alen, encbuf) ;  exit( 3) ; }
@@ -49,9 +49,13 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 			} ;
 
 		const char (* test)[MAXTEST] ;
+		int ilen ;
 
 		for ( test= &testlist[0] ; ( ** test ) ; ++ test )
 		{
+			ilen= decode_asc85(decbuf, MAXTEST, * test) ;
+				if ( ilen < 1 ) { fprintf(stderr, "string decode failed (%s)", * test) ;  exit(7) ; }
+			
 		}
 	}
 
