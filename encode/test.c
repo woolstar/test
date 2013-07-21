@@ -53,6 +53,16 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 
 	static void	test_random(void)
 	{
+		int istep ;
+		unsigned char rndval; 
+		int rdata = open ( "/dev/random", O_RDONLY);
+		read ( rdata, &rndval, sizeof(rndval));a
+
+		for ( istep = MAXTEST - rndval, (istep --) ;) {
+
+			
+
+		}
 	}
 
 
