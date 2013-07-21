@@ -90,6 +90,7 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 				exit( 7);
 			}
 		}
+		close( rdata);
 	}
 
 
