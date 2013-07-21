@@ -7,7 +7,7 @@
 
 	int step= 7 ;
 
-	static void	compare_buff(unsigned char * abuf1, unsigned char * abuf2, int alen)
+	static int	compare_buff(const unsigned char * abuf1, const unsigned char * abuf2, int alen)
 	{
 		while ( alen && abuf1 && abuf2 && ( * abuf1 == * abuf2 )) { alen --, abuf1 ++, abuf2 ++ ; }
 		return alen ;
@@ -54,8 +54,10 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 		for ( test= &testlist[0] ; ( ** test ) ; ++ test )
 		{
 			ilen= decode_asc85(decbuf, MAXTEST, * test) ;
-				if ( ilen < 1 ) { fprintf(stderr, "string decode failed (%s)", * test) ;  exit(7) ; }
-			
+				if ( ilen < 1 ) { fprintf(stderr, "string decode failed (%s)\n", * test) ;  exit(7) ; }
+			encode_asc85( finalbuf, sizeof(finalbuf), decbuf, ilen) ;
+			if ( compare_buff( * test, finalbuf, strlen( * test)) )
+				{ fprintf( stderr, "string recoding failure ::\nIN: %s\nOUT: %s\n", * test, finalbuf) ;  exit( 7) ; }
 		}
 	}
 
