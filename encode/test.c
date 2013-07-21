@@ -88,6 +88,8 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 				rdata = open( "rfailed.data", O_RDWR);
 				write( rdata, srcbuf, itotal);
 				close( rdata);
+
+				exit( 7);
 			}
 		}
 	}
