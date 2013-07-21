@@ -28,6 +28,13 @@
 			{ fprintf(stderr, "contents mismatch (%ld:%d) (%s)", aval, alen, encbuf) ;  exit( 3) ; }
 	}
 
+	static void	test_strings(void)
+	{
+	}
+
+	static void	test_random(void)
+	{
+	}
 
 
 int main(int N, char ** S)
@@ -66,5 +73,11 @@ int main(int N, char ** S)
 		for (lval= 0, lmax= 0xffffffff ; ( lval < lmax ) ; lval ++ ) { check( lval, 4) ; }
 		puts(".") ;
 	}
+
+	test_strings() ;
+	puts("s.") ;
+
+	test_random() ;
+	puts("r.") ;
 }
 
