@@ -7,24 +7,29 @@
 
 	int step= 7 ;
 
+	static int	compare_buff(const unsigned char * abuf1, const unsigned char * abuf2, int alen)
+	{
+		while ( alen && abuf1 && abuf2 && ( * abuf1 == * abuf2 )) { alen --, abuf1 ++, abuf2 ++ ; }
+		return alen ;
+	}
+
 	static void	check(unsigned long aval, int alen)
 	{
 		int iret, istep ;
 		unsigned long ltmp ;
-		unsigned char	ibuf[8], obuf[8], * uptr, * uchk ;
+		unsigned char	ibuf[8], obuf[8], * uptr ;
 		char encbuf[8] ;
 
 		for ( istep= alen, uptr= ibuf, ltmp= aval ; (istep -- ) ; ltmp >>= 8 ) { *(uptr ++)= 0xff & ltmp ; }
 		encode_asc85( encbuf, sizeof(encbuf), ibuf, alen) ;
 		if ( ! * encbuf || strchr( encbuf, '/' ))
-			{ perror("encode failed") ;  exit( 1) ; }
+			{ fprintf(stderr, "encode failed") ;  exit( 1) ; }
 
 		iret= decode_asc85(obuf, sizeof(obuf), encbuf) ;
 		if ( iret != alen )
-			{ perror("decode length mismatch") ;  exit( 2) ; }
+			{ fprintf(stderr, "decode length mismatch") ;  exit( 2) ; }
 
-		for ( istep= alen, uptr= ibuf, uchk= obuf ; ( istep && ( * uptr == * uchk ) ) ; istep --, uptr ++, uchk ++ ) { }
-		if ( istep )
+		if ( compare_buff( ibuf, obuf, alen ) )
 			{ fprintf(stderr, "contents mismatch (%ld:%d) (%s)", aval, alen, encbuf) ;  exit( 3) ; }
 	}
 
@@ -44,10 +49,15 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 			} ;
 
 		const char (* test)[MAXTEST] ;
+		int ilen ;
 
 		for ( test= &testlist[0] ; ( ** test ) ; ++ test )
 		{
-			printf("hi %s\n", * test) ;
+			ilen= decode_asc85(decbuf, MAXTEST, * test) ;
+				if ( ilen < 1 ) { fprintf(stderr, "string decode failed (%s)\n", * test) ;  exit(7) ; }
+			encode_asc85( finalbuf, sizeof(finalbuf), decbuf, ilen) ;
+			if ( compare_buff( * test, finalbuf, strlen( * test)) )
+				{ fprintf( stderr, "string recoding failure ::\nIN: %s\nOUT: %s\n", * test, finalbuf) ;  exit( 7) ; }
 		}
 	}
 
