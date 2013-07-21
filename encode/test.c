@@ -36,6 +36,19 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 
 	static void	test_strings(void)
 	{
+		const static const char testlist[][MAXTEST]= { 
+				"helloworld",
+				"HTTaaaaaaaaaaaaaaaaaaaaabbccccccccdddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffffgggghhhhhhhhhhhhhiiiiiiiiiiiiillllllmmmmnnnnnnnnnnnnnnnooooooooooooppppprrrrrrrrrrsssssssssssssstttttttttttttttttttttttuuuuuuuuuuvvwwwwxyyyyy",
+				"nreoe2neatYteor4ri7eeoi7s5se2h2oafnpet4ohhsactdoetro2tos22fete7UeiumvooseirihpgtansteunrtloowrecrrmolmtSnoneuvoioi7rehesdtt9eeeo3rhoLawt41bpnTi1iinrlreinrt1nwnrem4ivlslghR26hdtitbnr5RomyeawhtoeT3nevsctet2egw1apo379rih7fi3aqgvoi3vtrteiTttvwTmsInbSfmstbtoUi2lecotdeiiseso73ogrMr2sor4eeeclrtisewftiegac3lAcrcerfeeoEahtehoebnnpweS1o2hatttffNHnmt4m5sptginemAittlUc7rnc7iehernmInftdewhunuroTldihe51idrelxoaetlftrC4hepasat7gste2mtpsttr3aivlods5xasnoemfairreafdo2opbne3tclmlfolauenq2ePoonbnmoiae33Titlrnyf92tieoityeirllLEws1hLo4iaeiGoUifen2txi2t1ehttndsnvneosyE9d8us9ef14nrSuotteinfs747nw7iedeohg2o7atsocr2yxhic2qarlhwEpt2i3rsxUmefUmeaisc4hnhenonwetihfnCtfrwolt2rli",
+				"",	// sentinal -- end of tests
+			} ;
+
+		const char (* test)[MAXTEST] ;
+
+		for ( test= &testlist[0] ; ( ** test ) ; ++ test )
+		{
+			printf("hi %s\n", * test) ;
+		}
 	}
 
 	static void	test_random(void)
@@ -55,29 +68,32 @@ int main(int N, char ** S)
 
 		// test fractional and full 4 bytes packets
 
-	for (lval= 0, lmax= 0xff ; ( lval < lmax ) ; lval += step ) { check( lval, 1) ; }
-	for (lval= 0xff ; (lval > step ) ; lval -= step ) { check( lval, 1) ; }
-	puts("1.") ;
-
-	for (lval= 0, lmax= 0xffff ; ( lval < lmax ) ; lval += step ) { check( lval, 2) ; }
-	for (lval= 0xffff; ( lval > step ) ; lval -= step ) { check( lval, 2) ; }
-	puts("2.") ;
-
-	for (lval= 0, lmax= 0xffffff ; ( lval < lmax ) ; lval += step ) { check( lval, 3) ; }
-	for (lval= 0xffffff; ( lval > step ) ; lval -= step ) { check( lval, 3) ; }
-	puts("3.") ;
-
-	if ( step > 1 )
+	if ( step )
 	{
-		for (lval= 0, lmax= 0xffffffff - (2 * step) ; ( lval < lmax ) ; lval += step ) { check( lval, 4) ; }
-		puts("4 up.") ;
-		for (lval= 0xffffffff; ( lval > step ) ; lval -= step ) { check( lval, 4) ; }
-		puts("4 down.") ;
-	}
-	else
-	{
-		for (lval= 0, lmax= 0xffffffff ; ( lval < lmax ) ; lval ++ ) { check( lval, 4) ; }
-		puts(".") ;
+		for (lval= 0, lmax= 0xff ; ( lval < lmax ) ; lval += step ) { check( lval, 1) ; }
+		for (lval= 0xff ; (lval > step ) ; lval -= step ) { check( lval, 1) ; }
+		puts("1.") ;
+
+		for (lval= 0, lmax= 0xffff ; ( lval < lmax ) ; lval += step ) { check( lval, 2) ; }
+		for (lval= 0xffff; ( lval > step ) ; lval -= step ) { check( lval, 2) ; }
+		puts("2.") ;
+
+		for (lval= 0, lmax= 0xffffff ; ( lval < lmax ) ; lval += step ) { check( lval, 3) ; }
+		for (lval= 0xffffff; ( lval > step ) ; lval -= step ) { check( lval, 3) ; }
+		puts("3.") ;
+
+		if ( step > 1 )
+		{
+			for (lval= 0, lmax= 0xffffffff - (2 * step) ; ( lval < lmax ) ; lval += step ) { check( lval, 4) ; }
+			puts("4 up.") ;
+			for (lval= 0xffffffff; ( lval > step ) ; lval -= step ) { check( lval, 4) ; }
+			puts("4 down.") ;
+		}
+		else
+		{
+			for (lval= 0, lmax= 0xffffffff ; ( lval < lmax ) ; lval ++ ) { check( lval, 4) ; }
+			puts(".") ;
+		}
 	}
 
 	test_strings() ;
