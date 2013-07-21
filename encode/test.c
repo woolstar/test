@@ -80,7 +80,7 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 				if ( ilen < 1 ) { fprintf(stderr, "random decode failed.\n") ; exit( 7) ; }
 
 			if ( compare_buff( finalbuf, srcbuf, itotal) ) { 
-				fprintf(stderr, "random encode/decode failed.\n") ; exit( 7) ; 
+				fprintf(stderr, "random encode/decode failed.\n") ; 
 
 				close( rdata);
 				rdata = open( "rfailed.data", O_RDWR);
