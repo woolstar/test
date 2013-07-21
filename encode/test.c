@@ -69,8 +69,6 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 	{
 		int itotal, istep, rdata, ilen ;
 		unsigned char rndval; 
-
-		
 		
 		rdata = open( "/dev/random", O_RDONLY);
 		read( rdata, &rndval, sizeof(rndval));
@@ -83,8 +81,14 @@ static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
 			ilen = decode_asc85( finalbuf, itotal, encbuf);
 				if ( ilen < 1 ) { fprintf(stderr, "random decode failed.\n") ; exit( 7) ; }
 
-			if ( compare_buff( finalbuf, srcbuf, itotal) )
-				{ fprintf(stderr, "random encode/decode failed.\n") ; exit( 7) ; }
+			if ( compare_buff( finalbuf, srcbuf, itotal) ) { 
+				fprintf(stderr, "random encode/decode failed.\n") ; exit( 7) ; 
+
+				close( rdata);
+				rdata = open( "rfailed.data", O_RDWR);
+				write( rdata, srcbuf, itotal);
+				close( rdata);
+			}
 		}
 	}
 
