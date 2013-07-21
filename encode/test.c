@@ -28,6 +28,12 @@
 			{ fprintf(stderr, "contents mismatch (%ld:%d) (%s)", aval, alen, encbuf) ;  exit( 3) ; }
 	}
 
+
+#define		MAXTEST	1024
+
+static unsigned char	srcbuf[MAXTEST], decbuf[MAXTEST] ;
+static char		encbuf[MAXTEST * 5 / 4 + 1], finalbuf[MAXTEST * 5 / 4 + 1 ] ;
+
 	static void	test_strings(void)
 	{
 	}
