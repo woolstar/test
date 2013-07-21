@@ -18,7 +18,7 @@ A set of C routines for packing and unpacking longs, and higher level routines f
 
 * test.c
 
-A test framework to verify operation.
+A test framework to verify operation.  Takes a step value for sequential tests as an optional argument.
 
 * base85.c
 

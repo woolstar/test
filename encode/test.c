@@ -108,7 +108,7 @@ int main(int N, char ** S)
 	unsigned long lval, lmax ;
 
 		// USAGE: test [stepvalue]
-		//   larger step values are faster, step 7 takes a few minutes
+		//   larger step values are faster, step 7 takes a few minutes, 0 skips sequential tests
 
 	N --, S ++ ;
 	if ( N && isdigit( **S )) { step= atoi( *S) ; }
