@@ -24,3 +24,7 @@ A test framework to verify operation.  Takes a step value for sequential tests a
 
 A command line tool for encoding/decoding ascii85 (rfc) streams.  See [base85.md](base85.md) for usage.
 
+* gen85.pl
+
+Code to generate the ascii85 & dasci85 code tables.  If you want to use an alternate alphabet, use this code to generate new tables for asc85.c
+
