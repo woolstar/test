@@ -1,4 +1,6 @@
 
+all: xrand xevp
+
 xrand: testrand.c
 	gcc $< -lcrypto -o $@
 
