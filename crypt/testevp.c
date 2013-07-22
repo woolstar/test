@@ -9,17 +9,17 @@
 
 int main(int N, char ** S)
 {
-	EVP_CIPHER_CTX ctx;
-	EVP_CipherInit_ex(&ctx, EVP_idea(), NULL, NULL, NULL, do_encrypt);
-	EVP_CIPHER_CTX_set_key_length(&ctx, 10);
-	EVP_CipherInit_ex(&ctx, NULL, NULL, key, iv, do_encrypt);
+	unsigned char key[]= "helloworld" ;
+	unsigned char iv[]= "12345678" ;
 
-	... EVP_CipherInit_ex(&ctx, NULL, NULL, key, iv, do_encrypt);
-	... EVP_CipherFinal_ex(&ctx, outbuf, &outlen)
+	EVP_CIPHER_CTX ctx;
+	EVP_CipherInit_ex(&ctx, EVP_bf_cbc(), NULL, NULL, NULL, 1);
+	EVP_CIPHER_CTX_set_key_length(&ctx, 10);
+	EVP_CipherInit_ex(&ctx, NULL, NULL, key, iv, -1);
+
+	// ... EVP_CipherFinal_ex(&ctx, outbuf, &outlen)
 
 	EVP_CIPHER_CTX_cleanup(&ctx);
-
-
 
 }
 
