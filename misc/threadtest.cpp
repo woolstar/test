@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include <thread>		// note, requires flag -std=c++11 for gcc
+						//  ex: g++ -std=c++11 threadtest.cpp -pthread -o tt
 #include <random>
 
 	#define	PSAFE(ptr, xxx) { if ( ptr ) { ptr-> xxx() ; } }
