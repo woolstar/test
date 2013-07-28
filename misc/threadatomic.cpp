@@ -3,7 +3,7 @@
 #include <time.h>
 
 #include <chrono>
-#include <thread>		// note, requires flag -std=c++11 for gcc
+#include <thread>		// note, requires flag -std=c++11 for gcc 4.7, or -std=c++0x for gcc 4.6
 						//  ex: g++ -std=c++11 threadatomic.cpp -pthread -o ta
 #include <atomic>
 #include <random>
