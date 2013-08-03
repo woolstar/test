@@ -2,11 +2,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <chrono>
 #include <thread>		// note, requires flag -std=c++11 for gcc 4.7, or -std=c++0x for gcc 4.6
 						//  ex: g++ -std=c++11 threadatomic.cpp -pthread -o ta
 #include <atomic>
 #include <random>
+// #include <chrono>	until gcc 4.8, libstdc++ has to manually be built with --enable-libstdcxx-time
+						// in order to support sleep_for()
+						// SEE: http://stackoverflow.com/questions/12523122/
+
+#ifdef WIN32
+#	include <windows.h>
+#endif
 
 	#define	PSAFE(ptr, xxx) { if ( ptr ) { ptr-> xxx() ; } }
 
@@ -77,16 +83,26 @@ class	worker : public ethread
 	void	worker::work(void)
 	{
 		int iwk ;
-		std::chrono::microseconds	us( 1) ;
+		// std::chrono::microseconds	us( 1) ;
+#ifndef WIN32
 		struct timespec delay = { 0, 0 } ;
+#else
+		int iadd= 0 ;
+#endif
 
 		while (( iwk= s_count -- ) > 0)
 		{
 			m_ct ++ ;
 
 			// m_thread-> sleep_for( urand( m_rseed) * us) ;
+#ifndef WIN32
 			delay.tv_nsec= 1000 * urand( m_rseed) ;
 			nanosleep( & delay, NULL) ;
+#else
+			iadd += urand( m_rseed) ;
+			if ( iadd > 1000 ) { Sleep( 1) ;  iadd -= 1000 ; }
+				else { Sleep( 0) ; }
+#endif
 		}
 
 		s_count= 0 ;	// overwrite incase count went negative
@@ -115,5 +131,4 @@ int	main(int N, char ** S)
 
 	return 0 ;
 }
-
 
