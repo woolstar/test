@@ -250,6 +250,7 @@ static void	arg(const char * p)
 				if ( pop( &du) && (du >= 0.0 )) { push( sqrt( du)) ; } ERANGE
 			}
 			break ;
+		case '?' :  cmd_help() ;  break ;
 	}
 
 }
