@@ -58,9 +58,9 @@ static void	push(double aval)
 	//// COMMANDS
 
 	static void	cmd_printvalue(void) { peek( & dv) ;  printf("  %g\n", dv) ; }
-	static void	cmd_printdecimal(void) { long lval ; peek( & dv) ;  lval= floorl( dv) ;  printf("  %ld\n", lval) ; }
+	static void	cmd_printdecimal(void) { long lval ; peek( & dv) ;  lval= floor( dv) ;  printf("  %ld\n", lval) ; }
 	static void	cmd_printfloat(void) { peek( & dv) ;  printf("  %.5f\n", dv) ; }
-	static void	cmd_printhex(void) { long lval ; peek( & dv) ;  lval= floorl( dv) ;  printf("  %08lx\n", lval) ; }
+	static void	cmd_printhex(void) { long lval ; peek( & dv) ;  lval= floor( dv) ;  printf("  %08lx\n", lval) ; }
 	static void	cmd_printrad() { peek( & dv) ;  dv /= M_PI ;  printf("  %.2g\u03C0\n", dv) ; }
 	static void	cmd_printstack(void) 
 		{
