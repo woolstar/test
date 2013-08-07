@@ -114,6 +114,29 @@ template <class T> class elist_destroy : virtual public edata_list<T>
 		}
 } ;
 
+	// elist fp
+	//	mixin for functional programming
+	//
+template <class T> class elist_fp : virtual public edata_list<T>
+{
+	public:
+		template<typename _uFunct> void	each(_uFunct _afn )
+			{ typename edata_list<T>::itrptr step( this) ;  while ( ++ step ) { _afn( * step) ; } }
+
+		template<typename _uFunct> bool	test(_uFunct _afn )
+			{ typename edata_list<T>::itrptr step( this) ;  while ( ++ step ) { if ( _afn( * step)) return true ; }  return false ; }
+		template<typename _uFunct> T *	find(_uFunct _afn )
+			{ typename edata_list<T>::itrptr step( this) ;  while ( ++ step ) { if ( _afn( * step)) return  * step ; }  return NULL ; }
+
+		template<typename _uFunct> int howmany(_uFunct _afn )
+			{ typename edata_list<T>::itrptr step( this) ;
+				int icount= 0 ;  while ( ++ step ) { if ( _afn( * step)) { icount ++ ; } }
+				return icount ;
+			}
+} ;
+
+	////
+
 	// edata slist
 	//	a singly linked list
 	//
@@ -211,6 +234,7 @@ class	samplevalue : public edata_tlist<samplevalue>::listable
 		const int	m_val ;
 } ;
 
+class	simplefp : public edata_slist<simplevalue>, public elist_fp<simplevalue> { } ;
 class	samplerdestroy : public edata_tlist<samplevalue>, public elist_destroy<samplevalue> { } ;
 
 #define		CHECK(va, vb)	if (va != vb) { \
@@ -218,7 +242,7 @@ class	samplerdestroy : public edata_tlist<samplevalue>, public elist_destroy<sam
 
 int		main(int, char **)
 {
-	edata_slist<simplevalue>	simplelist ;
+	simplefp	simplelist ;
 	edata_tlist<samplevalue>	samplelist ;
 	samplerdestroy	samplelist2 ;
 	simplevalue * siptr ;
@@ -234,6 +258,20 @@ int		main(int, char **)
 
 	siptr= simplelist.getfirst() ;
 	CHECK(siptr-> m_val, 1) ;
+
+		// function programming examples
+	{
+		int isum = 0 ;
+
+		CHECK( simplelist.test( []( const simplevalue * ptr) { return ptr-> m_val == 2 ; }), true ) ;
+		CHECK( simplelist.test( []( const simplevalue * ptr) { return ptr-> m_val == 4 ; }), false ) ;
+		siptr= simplelist.find( []( const simplevalue * ptr) { return ptr-> m_val == 3 ; }) ;
+		CHECK(siptr != NULL, true) ;
+		CHECK(siptr-> m_val, 3) ;
+
+		simplelist.each( [&isum]( const simplevalue * ptr) { isum += ptr-> m_val ; } ) ;
+		CHECK( isum, 6) ;
+	}
 
 		// setup list
 	samplelist.add(new samplevalue(1)) ;
