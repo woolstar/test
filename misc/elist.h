@@ -269,6 +269,9 @@ int		main(int, char **)
 		CHECK(siptr != NULL, true) ;
 		CHECK(siptr-> m_val, 3) ;
 
+		simplelist.each( [isum]( const simplevalue * ptr) { isum += ptr-> m_val ; } ) ;
+		CHECK( isum, 0) ;
+
 		simplelist.each( [&isum]( const simplevalue * ptr) { isum += ptr-> m_val ; } ) ;
 		CHECK( isum, 6) ;
 	}
