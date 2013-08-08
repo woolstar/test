@@ -119,11 +119,11 @@ void	doencode(FILE * fin)
 		const char * p ;
 
 		if ( strict ) {
-			memset( sencodingvec, sizeof( sencodingvec), 0) ;
+			memset( sencodingvec, 0, sizeof( sencodingvec)) ;
 			sencodingvec[':']= 4 ;
 			SETUPSTR( " \n\r\b\f\t\v", 2 ) ;
 		}
-			else { memset( sencodingvec, sizeof( sencodingvec), 2) ; }
+			else { memset( sencodingvec, 2, sizeof( sencodingvec)) ; }
 
 		SETUPSTR( get_alphabet_a85(), 1) ;
 		sencodingvec['.']= 1 ;
