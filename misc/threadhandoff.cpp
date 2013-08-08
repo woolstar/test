@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <thread>		// note, requires flag -std=c++11 for gcc
-						//  ex: g++ -std=c++11 threadtest.cpp -pthread -o tt
+#include <thread>		// note, requires flag -std=c++0x for gcc
+						//  ex: g++ -std=c++0x threadhandoff.cpp -pthread
 #include <atomic>
 #include <condition_variable>
 #include <functional>
