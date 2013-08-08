@@ -176,6 +176,7 @@ int		decode_asc85x(unsigned char * zdest, int asz, const char * asrc, int * zuse
 		*(zfill ++)= 0xff & ( lval >> 8 ) ;
 		*(zfill ++)= 0xff & lval ;
 		ptr += ival ;
+		asz -= 4 ;
 	}
 
 	if ( zuse ) { * zuse= ( ptr - asrc ) ; }
