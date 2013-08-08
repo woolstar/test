@@ -10,6 +10,10 @@
 #include <random>
 #include "elist.h"
 
+#ifdef WIN32
+#	include <windows.h>
+#endif
+
 class	simplework : public edata_slist<simplework>::listable
 		{ public: simplework(char atok) : m_work(atok) { }  const char m_work ; } ;
 
@@ -72,7 +76,7 @@ simplework *	econduit::get(void)
 {
 	int iret ;
 	std::unique_lock<std::mutex>	lk(mu) ;
-	auto lamdaready = [this](){ return ( this-> iwork && ! this-> istate) ; } ;
+	auto lamdaready = [this](){ return ( this-> iwork || ! this-> istate) ; } ;
 
 	while ( istate ) {
 		iret= cv.wait_for(lk, std::chrono::milliseconds( 1 ), lamdaready ) ;
@@ -115,6 +119,35 @@ std::thread *	ethread::launch(void)
 	m_thread= new std::thread( launcher, this) ;
 	return m_thread ;
 }
+
+	//
+	// hack for platform sepecific waiting
+class waiter
+{
+	public:
+		void wait_us(int atime)
+#ifndef WIN32
+		{
+			struct timespec delay = { 0, 0 } ;
+			delay.tv_nsec= 1000 * atime ;
+			nanosleep( & delay, NULL) ;
+		}
+
+#else
+		{
+			m_bits += atime ;
+			if ( m_bits > 1000) { Sleep( 1) ;  m_bits -= 1000 ; }
+				else { Sleep( 0) ; }
+		}
+
+		waiter() : m_bits( 0) { }
+
+	protected:
+		int	m_bits ;
+#endif
+
+} ;
+	
 	//
 	
 	typedef std::mt19937 rnd_type ;
@@ -123,16 +156,28 @@ std::thread *	ethread::launch(void)
 class	worker : public ethread
 {
 	public:
-		worker(unsigned int	aseed, char cid) ;
+		worker(econduit &, unsigned int	aseed, char cid) ;
 
 		void	work(void) ;
+
+		static void	setcount(int) ;
+
+	protected:
+		static std::atomic<int>	s_count ;
 
 	private:
 		char m_id ;
 
 		rnd_type	m_rseed ;
+		waiter		xer ;	// a helper object for waiting
+
+		econduit & 	m_dest ;
 		
 } ;
+
+	std::atomic<int>	worker::s_count( 0) ;
+
+	void	worker::setcount(int acount) { s_count= acount ; }
 
 class	storer : public ethread
 {
@@ -142,46 +187,77 @@ class	storer : public ethread
 		void	work(void) ;
 
 	private:
+		static const int	kWorksize = 1024 ;
+
 		econduit &	m_src ;
-		char	workstring[1024] ;
+		char	workstring[kWorksize] ;
 } ;
 
-	worker::worker(unsigned int aseed, char cid) : m_id( cid)
+	worker::worker(econduit & adest, unsigned int aseed, char cid) : m_dest( adest), m_id( cid)
 	{
 		m_rseed.seed( aseed) ;
-		// auto rand= std::bind(urand, m_rseed)
 	}
 
 	void	worker::work(void)
 	{
-		int ival= urand( m_rseed) ;
+		int iwk ;
 
-		printf("worker %c : %d\n", m_id, ival ) ;
+		int ival= urand( m_rseed) ;
+		while (( iwk= s_count --) > 0 )
+		{
+			xer.wait_us( urand( m_rseed)) ;
+			m_dest.add( new simplework( m_id)) ;
+		}
+
+		s_count= 0 ;
 	}
 
 	void	storer::work(void)
 	{
+		simplework * wkptr ;
+		char *sfill= workstring ;
+		char * slimit= workstring + kWorksize - 1;
+
+		while ((sfill < slimit) && ( wkptr= m_src.get()))
+		{
+			*( sfill ++)= wkptr-> m_work ;
+			delete wkptr ;
+		}
+		* sfill= '\0' ;
+
+		printf("ASSEM: %s\n", workstring) ;
 	}
 
 	//
 
 int	main(int N, char ** S)
 {
+	econduit	egate ;
+
 	worker * x1, * x2 ;
+	storer * y1 ;
 
 	srand( time( NULL)) ;
 
-	x1= new worker(rand(), 'a') ;
-	x2= new worker(rand(), 'b') ;
+	x1= new worker(egate, rand(), 'a') ;
+	x2= new worker(egate, rand(), 'b') ;
+	y1= new storer( egate) ;
+
+	worker::setcount( 400) ;
 
 	x1-> launch() ;
 	x2-> launch() ;
+	y1-> launch() ;
 
 	x1-> join() ;
 	x2-> join() ;
+	egate.done() ;
+
+	y1-> join() ;
 
 	delete x1 ;
 	delete x2 ;
+	delete y1 ;
 
 	return 0 ;
 }
