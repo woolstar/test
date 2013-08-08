@@ -128,7 +128,7 @@ template <class T> class elist_fp : virtual public edata_list<T>
 		template<typename _uFunct> T *	find(_uFunct _afn )
 			{ typename edata_list<T>::itrptr step( this) ;  while ( ++ step ) { if ( _afn( * step)) return  * step ; }  return NULL ; }
 
-		template<typename _uFunct> int howmany(_uFunct _afn )
+		template<typename _uFunct> int count_if(_uFunct _afn )
 			{ typename edata_list<T>::itrptr step( this) ;
 				int icount= 0 ;  while ( ++ step ) { if ( _afn( * step)) { icount ++ ; } }
 				return icount ;
