@@ -13,16 +13,21 @@ namespace AddingMachine
 			{
 				if (String.IsNullOrWhiteSpace(line))
 				{
-					Console.WriteLine("\t" + isum.ToString("f2"));
+					Console.WriteLine("\t{0:f2}", isum);
 				}
 				else
 				{
-					double ival = Convert.ToDouble(line);
-					if (ival > 0) isum += ival;
+					try
+					{
+						double ival = Convert.ToDouble(line);
+						if (ival > 0) isum += ival;
+					}
+					catch (Exception ex) { /* not a number */ }
 				}
 			}
 
-			Console.WriteLine("  ====\t" + isum.ToString("f2"));
+			Console.WriteLine("  ====\t{0:f2}", isum);
 		}
 	}
 }
+
