@@ -18,7 +18,7 @@ int	main()
 		}
 	}
 
-	printf("\t%.2f\n", dsum) ;
+	printf("  ====\t%.2f\n", dsum) ;
 
 	return 0;
 }
