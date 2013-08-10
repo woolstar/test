@@ -6,8 +6,9 @@ Simple tools and library tests.
 ##### Tools
 
 * addl.c
+* addl.cs
 
-	A simple command line tool which adds all the numbers input from stdin.  Shows the total when fed a blank line, or when the program exits.
+	A simple command line tool which adds all the numbers input from stdin.  Shows the total when fed a blank line, or when the program exits.  Plans to implement in more languages as sort of my hello world.
 
 * countdown.pl
 
