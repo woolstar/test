@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <thread>		// note, requires flag -std=c++11 for gcc
-						//  ex: g++ -std=c++11 threadtest.cpp -pthread -o tt
+#include <thread>		// note, requires flag -std=c++0x for older gcc
+					//  ex: g++ -std=c++11 threadtest.cpp -pthread -o tt
+					//  osx: clang++ -std=c++11 -stdlib=libc++ threadtest.cpp -o tt
 #include <random>
 
 	#define	PSAFE(ptr, xxx) { if ( ptr ) { ptr-> xxx() ; } }
