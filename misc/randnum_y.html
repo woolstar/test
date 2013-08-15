@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Semi-random ID generator example in YUI & Pure</title>
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css">
+<style>
+
+#list1 { width: 48% }
+#list2 { width: 48% }
+
+#ctlayout {
+	padding-left: 20px ;
+	position: relative ;
+}
+#rlayout {
+	padding-left: 120px ;
+	position: relative;
+}
+
+@media (max-width : 400px ) {
+	#ctlayout { padding: 10px }
+}
+
+@media (max-width : 600px) {
+	#list1, #list2 {
+		position: static ;
+		margin: 0 ;
+		padding: 0 ;
+		width: 100% ;
+	}
+}
+
+@media (max-width : 320px) {
+	#rlayout { padding: 10px }
+}
+
+</style>
+</head>
+<body>
+ID generator
+<p>
+<div class="pure-g-r setup" id="ctlayout">
+   <div class="pure-u-3-5"><i>slider</i></div>
+   <div class="pure-u-1-5" id=val>6 entries</div>
+</div>
+<hr>
+<div class="pure-g-r results" id="rlayout">
+    <div class="pure-u-1-2" id=list1>
+	0011
+	</div>
+    <div class="pure-u-1-2" id=list2>
+	2233
+	</div>
+  </div>
+</div>
+
+</div>
+</body>
+</html> 
