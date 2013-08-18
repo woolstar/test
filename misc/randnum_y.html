@@ -37,12 +37,28 @@
 }
 
 </style>
+<script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
+<script>
+</script>
 </head>
-<body>
+<body class="yui3-skin-sam">
 ID generator
 <p>
 <div class="pure-g-r setup" id="ctlayout">
-   <div class="pure-u-3-5"><i>slider</i></div>
+   <div class="pure-u-3-5" id=slide>
+	 <span class="yui3-widget yui3-sliderbase yui-slider">
+	 <span class="yui3-slider-content yui3-slider-x">
+     <span class="yui3-slider-rail">
+	   <span class="yui3-slider-rail-cap-left"></span><!-- or cap-top -->
+	   <span class="yui3-slider-rail-cap-right"></span><!-- or cap-bottom -->
+	   <span class="yui3-slider-thumb">
+		   <img class="yui3-slider-thumb-shadow">
+		   <img class="yui3-slider-thumb-image">
+	   </span>
+	 </span>
+	 </span>
+	 </span>
+   </div>
    <div class="pure-u-1-5" id=val>6 entries</div>
 </div>
 <hr>
