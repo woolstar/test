@@ -39,6 +39,46 @@
 </style>
 <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
 <script>
+
+var numlist ;
+
+function pick(aar)
+{
+	var ispan= aar.length ;
+	var val= Math.floor(Math.random() * ( ispan +1)) ;
+	if ( val > ispan ) { val= pick(aar) ; }
+
+	return val ;
+}
+
+numlist= [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ;
+numlist.consume = function(index)
+{
+	var tmp= this[index] ;
+	// if ( index < ( this.length -1 ) ) { this[index]= this.pop() ; }
+		// else { this.pop() ; }
+	this.splice( index, 1) ;
+	return tmp ;
+}
+
+function gen(adigits)
+{
+	var istep= adigits ;
+	var i ;
+	var str= "" ;
+	var ulist= Object.create( numlist) ;
+
+	for ( istep= adigits; ( istep -- ) ; ) { str += ulist.consume( pick( ulist)) ; }
+	return str ;
+}
+
+var step ;
+
+for ( istep= 10 ; ( istep -- ) ; )
+{
+	
+}
+
 </script>
 </head>
 <body class="yui3-skin-sam">
