@@ -20,8 +20,7 @@
   SampleBuffer::SampleBuffer(char const * astring)
   {
     int tmplen= strlen( astring) ;
-	std::unique_ptr<char []>	tmp( new char[tmplen +1 ] ) ;
-    m_buffer = std::move( tmp) ;
+    m_buffer = new char[tmplen +1] ;
     m_len= tmplen ;
     strncpy( m_buffer.get(), astring, tmplen) ;
   }
