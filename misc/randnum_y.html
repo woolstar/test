@@ -40,6 +40,7 @@
 <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
 <script>
 
+var update ;
 var numlist ;
 
 function pick(aar)
@@ -74,9 +75,31 @@ function gen(adigits)
 
 var step ;
 
-for ( istep= 10 ; ( istep -- ) ; )
-{
-	
+YUI().use('node', function (Y) {
+
+	update = function()
+	{
+		var list1= Y.one('#list1') ;
+		var list2= Y.one('#list2') ;
+		var x ;
+
+		list1.empty() ;
+
+		for ( istep= 10 ; ( istep -- ) ; )
+		{
+			x= gen( 6) ;
+			list1.append("<br>" + x + "</br>") ;
+		}
+
+		list2.empty() ;
+
+		for ( istep= 10 ; ( istep -- ) ; )
+		{
+			x= gen( 6) ;
+			list2.append("<br>" + x + "</br>") ;
+		}
+	}
+
 }
 
 </script>
