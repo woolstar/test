@@ -3,7 +3,8 @@
   <meta charset="utf-8">
   <title>Semi-random ID generator example in YUI & Pure</title>
 
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css"></link>
+<link rel="sytlesheet" href="http://yui.yahooapis.com/3.11.0/build/slider-base/assets/skins/capsule/slider-base.css"></link>
 <style>
 
 #list1 { width: 48% }
@@ -36,7 +37,15 @@
 }
 
 </style>
+<style type="text/css">
+// The rail and end cap images are shared in a sprite
+#slide .yui3-slider-x .yui3-slider-rail,
+#slide .yui3-slider-x .yui3-slider-rail-cap-left,
+#slide .yui3-slider-x .yui3-slider-rail-cap-right {
+    background-image: url(http://yui.yahooapis.com/3.11.0/build/slider-base/assets/skins/capsule/rail-x-lines.png);
+</style>
 <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
+
 <script>
 
 var generator = {} ;
@@ -75,9 +84,16 @@ function gen(adigits)
 
 var step ;
 
-YUI().use('node', function (Y) {
+YUI().use('node', 'event', 'slider', function (Y) {
 
-	generator.update = function()
+	var slider= new Y.Slider( {
+					min: 3, max: 9, value: 6,
+					thumbUrl: 'http://yui.yahooapis.com/3.11.0/build/slider-base/assets/skins/capsule/thumb-x-line.png'
+				} ) ;
+	var sliderdrag= 0 ;
+	slider.render("#slide") ;
+
+	generator.update = function( alen)
 	{
 		var list1= Y.one('#list1') ;
 		var list2= Y.one('#list2') ;
@@ -87,7 +103,7 @@ YUI().use('node', function (Y) {
 
 		for ( istep= 10 ; ( istep -- ) ; )
 		{
-			x= gen( 6) ;
+			x= gen( alen) ;
 			list1.append("<br>" + x + "</br>") ;
 		}
 
@@ -95,13 +111,22 @@ YUI().use('node', function (Y) {
 
 		for ( istep= 10 ; ( istep -- ) ; )
 		{
-			x= gen( 6) ;
+			x= gen( alen) ;
 			list2.append("<br>" + x + "</br>") ;
 		}
 	}
 
-	generator.update() ;
-
+	generator.update( 6) ;
+	slider.on('slideStart', function() { sliderdrag= 1 ; } ) ;
+	slider.on('slideEnd', function( ddev) {
+			generator.update( slider.getValue() ) ;
+			sliderdrag= 0 ;
+		}) ;
+	slider.on('valueChange', function( ddev) {
+			if ( ! sliderdrag ) {
+				generator.update( ddev.newVal) ;
+			} 
+		}) ;
 }) ;
 
 </script>
