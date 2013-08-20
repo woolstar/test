@@ -20,7 +20,8 @@
   SampleBuffer::SampleBuffer(char const * astring)
   {
     int tmplen= strlen( astring) ;
-    m_buffer = new char[tmplen +1] ;
+	std::unique_ptr<char []>	tmp( new char[tmplen +1] ) ;
+    m_buffer = std::move( tmp) ;
     m_len= tmplen ;
     strncpy( m_buffer.get(), astring, tmplen) ;
   }
@@ -40,8 +41,7 @@
   } ;
 
   DRYBuffer::DRYBuffer(int alen) : m_buffer( new char[alen +1]), m_len(alen)
-  {
-  }
+  { }
   DRYBuffer::DRYBuffer(char const * astring) : DRYBuffer(strlen(astring))
   {
     strncpy( m_buffer.get(), astring, m_len) ;
