@@ -93,10 +93,12 @@ YUI().use('node', 'event', 'slider', function (Y) {
 	var sliderdrag= 0 ;
 	slider.render("#slide") ;
 
+	var list1= Y.one('#list1') ;
+	var list2= Y.one('#list2') ;
+	var valwidget = Y.one('#val') ;
+
 	generator.update = function( alen)
 	{
-		var list1= Y.one('#list1') ;
-		var list2= Y.one('#list2') ;
 		var x ;
 
 		list1.empty() ;
@@ -114,6 +116,8 @@ YUI().use('node', 'event', 'slider', function (Y) {
 			x= gen( alen) ;
 			list2.append("<br>" + x + "</br>") ;
 		}
+
+		valwidget.empty().append(alen + " digits") ;
 	}
 
 	generator.update( 6) ;
@@ -149,7 +153,7 @@ ID generator
 	 </span>
 	 </span>
    </div>
-   <div class="pure-u-1-5" id=val>6 entries</div>
+   <div class="pure-u-1-5" id=val>6 digits</div>
 </div>
 <hr>
 <div class="pure-g-r results" id="rlayout">
