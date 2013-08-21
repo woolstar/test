@@ -91,7 +91,8 @@ YUI().use('node', 'event', 'slider', function (Y) {
 
 	var slider= new Y.Slider( {
 					min: 3, max: 9, value: 6,
-					length: '300px',
+					width: '90%',
+					length: '90%',
 					thumbUrl: 'http://yui.yahooapis.com/3.11.0/build/slider-base/assets/skins/capsule/thumb-x-line.png'
 				} ) ;
 	var sliderdrag= 0 ;
@@ -144,8 +145,7 @@ ID generator
 <p>
 <div class="pure-g-r setup" id="ctlayout">
    <div class="pure-u-3-5">
-	 <div id=slide>
-	 </div>
+	 <div id=slide> </div>
    </div>
    <div class="pure-u-1-5" id=val>6 digits</div>
 </div>
