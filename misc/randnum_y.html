@@ -57,7 +57,7 @@ var numlist ;
 function pick(aar)
 {
 	var ispan= aar.length ;
-	var val= Math.floor(Math.random() * ( ispan +1)) ;
+	var val= Math.floor(Math.random() * ispan) ;
 	if ( val >= ispan ) { val= pick(aar) ; }
 
 	return val ;
