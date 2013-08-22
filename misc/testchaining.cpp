@@ -11,20 +11,18 @@
       SampleBuffer(char const * astring) ;
 
     protected:
-      std::unique_ptr<char *>    m_buffer ;
+      std::unique_ptr<char []>    m_buffer ;
       int m_len ;
   } ;
 
-  SampleBuffer::SampleBuffer(int alen) : m_len(alen)
-  {
-    * m_buffer = new char[alen +1] ;
-  }
+  SampleBuffer::SampleBuffer(int alen) : m_buffer( new char[alen +1]), m_len(alen)
+  { }
   SampleBuffer::SampleBuffer(char const * astring)
   {
     int tmplen= strlen( astring) ;
-    * m_buffer = new char[tmplen +1 ];
+	m_buffer.reset( new char[tmplen +1] ) ;
     m_len= tmplen ;
-    strncpy( * m_buffer, astring, tmplen) ;
+    strncpy( m_buffer.get(), astring, tmplen) ;
   }
 
 		// NEW way - C++11
@@ -37,17 +35,15 @@
       DRYBuffer(char const * astring) ;
 
     protected:
-      std::unique_ptr<char *>    m_buffer ;
+      std::unique_ptr<char []>    m_buffer ;
       int m_len ;
   } ;
 
-  DRYBuffer::DRYBuffer(int alen) : m_len(alen)
-  {
-    * m_buffer = new char[alen +1] ;
-  }
+  DRYBuffer::DRYBuffer(int alen) : m_buffer( new char[alen +1]), m_len(alen)
+  { }
   DRYBuffer::DRYBuffer(char const * astring) : DRYBuffer(strlen(astring))
   {
-    strncpy( * m_buffer, astring, m_len) ;
+    strncpy( m_buffer.get(), astring, m_len) ;
   }
 	
 

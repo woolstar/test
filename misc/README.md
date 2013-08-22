@@ -23,6 +23,14 @@ Simple tools and library tests.
 
 	Experiments on my old list templates, eventually to be moved to tools.  Allows simple list traversal using auto-pointer-iterator sub-class.  CCurrently contains mixins for singlely linked, doubly linked, destoryer method and functional programming primatives.  Test suite uses c++11 standard lambdas to demonstrate the FP methods.
 
+* randnum_y.html
+
+	Simple YUI/PureCSS dom nodes lib and a little progressive refinement layout.  Generates random digits (none repeating) for game email accounts.
+
+* testchaining.cpp
+
+	A non-trivial example of using constructor chaining, and also hacking at unique_ptr<>
+
 ##### Thread tests
 
 Started working through the c++11 standard on threads.  Turns out the standard committee never intended people to use the primatives directly, but for them to be built into libraries, so took some simple ideas from my old thread library and worked up a couple of examples.

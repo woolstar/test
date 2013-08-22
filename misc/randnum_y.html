@@ -1,11 +1,13 @@
-<!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
   <title>Semi-random ID generator example in YUI & Pure</title>
 
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css"></link>
+<link rel="sytlesheet" href="http://yui.yahooapis.com/3.11.0/build/slider-base/assets/skins/capsule/slider-base.css"></link>
 <style>
+
+.basic { padding: 8px }
 
 #list1 { width: 48% }
 #list2 { width: 48% }
@@ -37,17 +39,26 @@
 }
 
 </style>
+<style type="text/css">
+// The rail and end cap images are shared in a sprite
+#slide .yui3-slider-x .yui3-slider-rail,
+#slide .yui3-slider-x .yui3-slider-rail-cap-left,
+#slide .yui3-slider-x .yui3-slider-rail-cap-right {
+    background-image: url(http://yui.yahooapis.com/3.11.0/build/slider-base/assets/skins/capsule/rail-x-lines.png);
+	}
+</style>
 <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
+
 <script>
 
-var update ;
+var generator = {} ;
 var numlist ;
 
 function pick(aar)
 {
 	var ispan= aar.length ;
-	var val= Math.floor(Math.random() * ( ispan +1)) ;
-	if ( val > ispan ) { val= pick(aar) ; }
+	var val= Math.floor(Math.random() * ispan) ;
+	if ( val >= ispan ) { val= pick(aar) ; }
 
 	return val ;
 }
@@ -65,29 +76,41 @@ numlist.consume = function(index)
 function gen(adigits)
 {
 	var istep= adigits ;
-	var i ;
 	var str= "" ;
 	var ulist= Object.create( numlist) ;
 
-	for ( istep= adigits; ( istep -- ) ; ) { str += ulist.consume( pick( ulist)) ; }
+	if ( ! adigits ) { return "" }
+	str += ulist.consume( 1 + pick( ulist.slice( 1))) ;
+	for ( istep= adigits -1; ( istep -- ) ; ) { str += ulist.consume( pick( ulist)) ; }
 	return str ;
 }
 
 var step ;
 
-YUI().use('node', function (Y) {
+YUI().use('node', 'event', 'slider', function (Y) {
 
-	update = function()
+	var slider= new Y.Slider( {
+					min: 3, max: 9, value: 6,
+					width: '90%',
+					length: '90%',
+					thumbUrl: 'http://yui.yahooapis.com/3.11.0/build/slider-base/assets/skins/capsule/thumb-x-line.png'
+				} ) ;
+	var sliderdrag= 0 ;
+	slider.render("#slide") ;
+
+	var list1= Y.one('#list1') ;
+	var list2= Y.one('#list2') ;
+	var valwidget = Y.one('#val') ;
+
+	generator.update = function( alen)
 	{
-		var list1= Y.one('#list1') ;
-		var list2= Y.one('#list2') ;
 		var x ;
 
 		list1.empty() ;
 
 		for ( istep= 10 ; ( istep -- ) ; )
 		{
-			x= gen( 6) ;
+			x= gen( alen) ;
 			list1.append("<br>" + x + "</br>") ;
 		}
 
@@ -95,34 +118,36 @@ YUI().use('node', function (Y) {
 
 		for ( istep= 10 ; ( istep -- ) ; )
 		{
-			x= gen( 6) ;
+			x= gen( alen) ;
 			list2.append("<br>" + x + "</br>") ;
 		}
+
+		valwidget.empty().append(alen + " digits") ;
 	}
 
-}
+	generator.update( 6) ;
+	slider.on('slideStart', function() { sliderdrag= 1 ; } ) ;
+	slider.on('slideEnd', function( ddev) {
+			generator.update( slider.getValue() ) ;
+			sliderdrag= 0 ;
+		}) ;
+	slider.on('valueChange', function( ddev) {
+			if ( ! sliderdrag ) {
+				generator.update( ddev.newVal) ;
+			} 
+		}) ;
+}) ;
 
 </script>
 </head>
-<body class="yui3-skin-sam">
+<body class="yui3-skin-sam basic">
 ID generator
 <p>
 <div class="pure-g-r setup" id="ctlayout">
-   <div class="pure-u-3-5" id=slide>
-	 <span class="yui3-widget yui3-sliderbase yui-slider">
-	 <span class="yui3-slider-content yui3-slider-x">
-     <span class="yui3-slider-rail">
-	   <span class="yui3-slider-rail-cap-left"></span><!-- or cap-top -->
-	   <span class="yui3-slider-rail-cap-right"></span><!-- or cap-bottom -->
-	   <span class="yui3-slider-thumb">
-		   <img class="yui3-slider-thumb-shadow">
-		   <img class="yui3-slider-thumb-image">
-	   </span>
-	 </span>
-	 </span>
-	 </span>
+   <div class="pure-u-3-5">
+	 <div id=slide> </div>
    </div>
-   <div class="pure-u-1-5" id=val>6 entries</div>
+   <div class="pure-u-1-5" id=val>6 digits</div>
 </div>
 <hr>
 <div class="pure-g-r results" id="rlayout">

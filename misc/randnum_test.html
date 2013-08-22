@@ -1,0 +1,54 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Semi-random ID generator example in YUI & Pure</title>
+
+<style>
+
+.basic { padding: 8px }
+td { width: 20px ; text-align: right }
+
+</style>
+<script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
+
+<script>
+
+var generator = {} ;
+var numlist ;
+
+function pick(ispan)
+{
+	var val= Math.floor(Math.random() * ispan) ;
+
+	return val ;
+}
+
+YUI().use('node', function (Y) {
+
+	var istep ;
+	var str ;
+	var dest= Y.one('#list') ;
+
+	dest.empty() ;
+	str= "<tr>" ;
+	for ( istep= 20 ; ( istep -- ) ; ) { str += "<td>" + pick(5) + "</td>" }
+	str += "</tr>\n<tr>" ;
+	for ( istep= 20 ; ( istep -- ) ; ) { str += "<td>" + pick(10) + "</td>" }
+	str += "</tr>\n<tr>" ;
+	for ( istep= 20 ; ( istep -- ) ; ) { str += "<td>" + pick(50) + "</td>" }
+	str += "</tr>" ;
+	dest.append("<table cellpadding=2 border=1>" + str + "</table>") ;
+}) ;
+
+</script>
+</head>
+<body class="basic">
+Random number tester
+<p>
+<div id=list>
+0
+</div>
+
+</div>
+</body>
+</html> 

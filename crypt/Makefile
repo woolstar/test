@@ -1,11 +1,14 @@
 
 all: xrand xevp
 
-xrand: testrand.c
-	gcc $< -lcrypto -o $@
+CC=gcc
+CFLAGS=-g
 
-xevp: testevp.c
-	gcc $< -lcrypto -o $@
+xrand: testrand.c
+	$(CC) $(CFLAGS) $< -lcrypto -o $@
+
+xevp: testevp.c urand.o
+	$(CC) $(CFLAGS) $< urand.o -lcrypto -o $@
 
 clean:
 	rm -fr xrand xevp
