@@ -265,6 +265,7 @@ int		main(int, char **)
 
 		CHECK( simplelist.test( []( const simplevalue * ptr) { return ptr-> m_val == 2 ; }), true ) ;
 		CHECK( simplelist.test( []( const simplevalue * ptr) { return ptr-> m_val == 4 ; }), false ) ;
+
 		siptr= simplelist.find( []( const simplevalue * ptr) { return ptr-> m_val == 3 ; }) ;
 		CHECK(siptr != NULL, true) ;
 		CHECK(siptr-> m_val, 3) ;
