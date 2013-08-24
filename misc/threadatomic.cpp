@@ -16,6 +16,8 @@
 
 	#define	PSAFE(ptr, xxx) { if ( ptr ) { ptr-> xxx() ; } }
 
+	using std::atomic ;
+
 class	ethread 
 {
 	public:
@@ -56,7 +58,7 @@ class	worker : public ethread
 		static void		setcount(int) ;
 
 	protected:
-		static std::atomic<int>	s_count ;
+		static atomic<int>	s_count ;
 
 	private:
 		char m_id ;
@@ -67,7 +69,7 @@ class	worker : public ethread
 		
 } ;
 
-	std::atomic<int>	worker::s_count( 0) ;
+	atomic<int>	worker::s_count( 0) ;
 
 	void	worker::setcount(int aval)
 	{
