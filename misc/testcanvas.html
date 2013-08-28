@@ -1,0 +1,84 @@
+<html>
+  <script src="//ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+  <head><title>Canvas test</title></head>
+
+<body>
+
+<canvas id='draw' width="800px" height="800px"></canvas>
+<p>
+<hr>
+Boo.
+<p>
+
+<script>
+  var $mysize="I am "
+	+ document.viewport.getWidth() + " by "
+	+ document.viewport.getHeight() + " pixels large" ;
+
+  document.write($mysize + "\n")
+
+  var canvas = document.getElementById('draw')
+  var ctx = canvas.getContext('2d')
+
+
+  var wx= 800 ;
+  var wy= 800 ;
+  var margin= 40 ;
+  var ct= 10 ;
+
+  var dx= ( wx - 2 * margin ) / ( ct - 1 ) ;
+  var dy= ( wy - 2 * margin ) / ( ct - 1 ) ;
+
+  ctx.fillStyle= "rgb(240,240,240)"
+  ctx.fillRect(0,0,800,800)
+
+  var cx= wx / 2
+  var cy= wy / 2
+
+  	// create background lines
+  for ( i= ct, iy= margin ; ( i -- ) ; iy += dy ) {
+	  for ( j= ct , jx= margin ; ( j -- ) ; jx += dx ) { 
+		  nx= 0.9 * cx + 0.1 * jx, ny= 0.9 * cy + 0.1 * iy
+
+		  var lg= ctx.createLinearGradient( nx, ny, jx, iy) ;
+		  lg.addColorStop( 0, 'white') ;
+		  lg.addColorStop( 1, 'rgba(128,128,255,0.3)') ;
+		  ctx.strokeStyle= lg
+		  ctx.lineWidth= 3
+		  ctx.beginPath()
+		  ctx.moveTo( nx, ny)
+		  ctx.lineTo( jx, iy)
+		  ctx.stroke()
+	  }
+  }
+
+  	// create grid
+  ctx.fillStyle= "black"
+  ctx.strokeStyle= "black"
+  ctx.lineWidth= 1
+
+  for ( i= ct, iy= margin ; ( i -- ) ; iy += dy ) {
+	  ctx.beginPath() ;
+	  ctx.moveTo( margin, iy) ;
+	  ctx.lineTo(( wx - margin ), iy) ;
+	  ctx.stroke() ;
+  }
+  for ( j= ct , jx= margin ; ( j -- ) ; jx += dx ) { 
+	  ctx.beginPath() ;
+	  ctx.moveTo( jx, margin) ;
+	  ctx.lineTo( jx, ( wy - margin )) ;
+	  ctx.stroke() ;
+  }
+
+  for ( i= ct, iy= margin ; ( i -- ) ; iy += dy ) {
+	  for ( j= ct , jx= margin ; ( j -- ) ; jx += dx ) { 
+		  ctx.beginPath() ;
+		  ctx.arc( jx, iy, 4, 0, 2 * Math.PI, 0) ;
+		  ctx.fill() ;
+	  }
+  }
+
+</script>
+
+</body>
+</html>
