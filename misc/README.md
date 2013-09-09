@@ -5,7 +5,7 @@ Simple tools and library tests.
 
 ##### Tools
 
-* addl.c, addl.cs
+* addl.c, addl.cs, addl.js
 
 	A simple command line tool which adds all the numbers input from stdin.  Shows the total when fed a blank line, or when the program exits.  Plans to implement in more languages as sort of my hello world.
 
@@ -13,7 +13,15 @@ Simple tools and library tests.
 
 	A timer with some simple progress feedback.  (Used for Ingress portal timers now that they're so variable.)
 
-* pcalc.pl
+* nullhunt.c
+
+	Read through files and look for nulls, summarizing where found and how many.
+
+* nxtbook.pl
+
+	Script generator for pulling PDFs from pages.nxtbook.com, used for reading EEtimes offline.
+
+* pcalc.c
 
 	My own version of the unix stack based calculator 'dc'.  Added in some trig, e/log, and shortcuts for sqrts.
 	Uses a data driven command set for easy expansion automatic help text generation.
@@ -23,9 +31,17 @@ Simple tools and library tests.
 
 	Experiments on my old list templates, eventually to be moved to tools.  Allows simple list traversal using auto-pointer-iterator sub-class.  CCurrently contains mixins for singlely linked, doubly linked, destoryer method and functional programming primatives.  Test suite uses c++11 standard lambdas to demonstrate the FP methods.
 
-* randnum_y.html
+* randnum_y.html, randum_test.html
 
-	Simple YUI/PureCSS dom nodes lib and a little progressive refinement layout.  Generates random digits (none repeating) for game email accounts.
+	Simple YUI/PureCSS dom nodes lib and a little progressive refinement layout.  Generates random digits (none repeating) for game email accounts.  Test version generates a couple rows of numbers between 1 and 5/10/50.
+
+* test_usock.c
+
+	A Unix/domain socket server test program for testing file system interface to sockets.
+
+* testcanvas.html
+
+	Do some simple canvas drawing.
 
 * testchaining.cpp
 
