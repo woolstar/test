@@ -30,7 +30,7 @@ int main(int N, char ** S)
 
 		// round 1
 	EVP_CipherInit_ex(&ctx, EVP_bf_cbc(), NULL, NULL, NULL, 1);
-	EVP_CIPHER_CTX_set_key_length(&ctx, 10);
+	EVP_CIPHER_CTX_set_key_length(&ctx, strlen(key));
 	EVP_CipherInit_ex(&ctx, NULL, NULL, key, iv, -1);
 
 	destp= buffer ;
@@ -45,7 +45,7 @@ int main(int N, char ** S)
 
 		// round 2
 	EVP_CipherInit_ex(&ctx, EVP_bf_cbc(), NULL, NULL, NULL, 0);
-	EVP_CIPHER_CTX_set_key_length(&ctx, 10);
+	EVP_CIPHER_CTX_set_key_length(&ctx, strlen(key));
 	EVP_CipherInit_ex(&ctx, NULL, NULL, key, iv, -1);
 
 	destp= buffer2 ;
