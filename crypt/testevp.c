@@ -28,7 +28,7 @@ int main(int N, char ** S)
 
 	EVP_CIPHER_CTX_init(&ctx) ;
 
-		// round 1
+		// encode
 	EVP_CipherInit_ex(&ctx, EVP_bf_cbc(), NULL, NULL, NULL, 1);
 	EVP_CIPHER_CTX_set_key_length(&ctx, strlen(key));
 	EVP_CipherInit_ex(&ctx, NULL, NULL, key, iv, -1);
@@ -43,7 +43,7 @@ int main(int N, char ** S)
 
 	EVP_CIPHER_CTX_cleanup(&ctx);
 
-		// round 2
+		// decode
 	EVP_CipherInit_ex(&ctx, EVP_bf_cbc(), NULL, NULL, NULL, 0);
 	EVP_CIPHER_CTX_set_key_length(&ctx, strlen(key));
 	EVP_CipherInit_ex(&ctx, NULL, NULL, key, iv, -1);
