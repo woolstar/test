@@ -37,7 +37,7 @@ Simple tools and library tests.
 
 * sicp_sqrt.html
 
-	Calculation of sqrt assigment from Structure and Interpretation of Computer Programs ([mitpress.mit.edu/sicp][http://mitpress.mit.edu/sicp/]), version one with fixed error test, and second with scaled error test.
+	Calculation of sqrt assigment from Structure and Interpretation of Computer Programs ([mitpress.mit.edu/sicp](http://mitpress.mit.edu/sicp/)), version one with fixed error test, and second with scaled error test.
 
 * test_usock.c
 
