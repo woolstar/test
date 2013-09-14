@@ -24,7 +24,7 @@ int main(int N, char ** S)
 
 	OpenSSL_add_all_ciphers() ;
 
-	// printf("test: (%s) len %ld.\n", test, strlen(test)) ;
+	printf("test: (%s) len %zd.\n", test, strlen(test)) ;
 
 	EVP_CIPHER_CTX_init(&ctx) ;
 
@@ -65,6 +65,6 @@ int main(int N, char ** S)
 	encode_asc85(printbuf, sizeof(printbuf), buffer, iuse) ;
 	printf("ENC: %s\n", printbuf) ;
 	encode_asc85(printbuf, sizeof(printbuf), buffer2, iuse2) ;
-	printf("DEC: %s\n", printbuf) ;
+	printf("DEC: %s\nout: %s\n", printbuf, buffer2) ;
 }
 
