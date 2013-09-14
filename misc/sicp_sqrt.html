@@ -1,0 +1,70 @@
+<HTML>
+<head>
+  <title>SICP 1.1 - sqrt</title>
+  <script type="text/javascript" 
+      src="http://ajax.googleapis.com/ajax/libs/prototype/1.7/prototype.js"></script>
+  <script>
+	function w_sqrt1(x)
+	{   
+		var calc= 1 ;
+
+		function iter() { return ( 0.5 * ( calc + ( x / calc ))) ; }
+		function isgood() {
+			var err= x - calc * calc ;
+			if ( err < 0 ) { err= -err ; }
+			return ( err < 0.0001 ) ;
+		}
+
+		if ( x < 0. )
+			return -1 ;
+
+		while ( ! isgood()) { calc= iter() ; }
+		return calc ;
+	}
+
+	function w_sqrt2(x)
+	{   
+		var calc= 1 ;
+		var past= 0 ;
+
+		function iter() { return ( 0.5 * ( calc + ( x / calc ))) ; }
+		function isgood() {
+			var delt= ( calc - past ) ;
+			var range= 0.0001 * calc ;
+			if ( delt < 0 ) { delt= - delt ; }
+			return ( delt < range ) ;
+		}
+
+		if ( x < 0. )
+			return -1 ;
+
+		while ( ! isgood()) { past= calc ;  calc= iter() ; }
+		return calc ;
+	}
+  </script>
+</head>
+<body>
+Test sqrt:
+<p>
+<form id="f" action="?">
+  <input id=value name=value></input>
+  <a href="javascript: calc()">calc</a>
+</form>
+
+<p>
+<textarea id=out rows=8 cols=40>
+</textarea>
+
+<script>
+  function calc()
+  {
+  	var val= $("value").getValue() ;
+	var an1= w_sqrt1( val) ;
+	var an2= w_sqrt2( val) ;
+
+	$("out").value= "Sqrt 1: " + an1 + "\n" + "Sqrt 2: " + an2 + "\n" ;
+  }
+	
+</script>
+</body>
+</HTML>
