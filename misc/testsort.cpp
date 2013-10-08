@@ -436,6 +436,8 @@ void	simple_test(const containertype & alist)
 		cout << " time: " << std::setprecision( 9) << 0.1 * std::floor( 10. * sorter-> elapsed_.count()) << " ms\n" ;
 		if ( alist.size() < kMaxPrintLength ) { sorter-> doprint() ; }
 	}
+
+	cout << "\n" ;
 }
 
 	// parse command line args, load data and run test
