@@ -350,8 +350,9 @@ void	shell_sort::sort( void)
 	while ( hgap )
 	{
 		auto pstep= sort_.begin() ;
+		auto pnear= plimit - hgap ;
 
-		while ( pstep < plimit )
+		while ( pstep < pnear )
 		{
 			auto pbest= pstep ;
 			auto pskip= pstep + hgap ;
