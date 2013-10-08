@@ -51,6 +51,10 @@ Simple tools and library tests.
 
 	A non-trivial example of using constructor chaining, and also hacking at unique_ptr<>
 
+* testsort.cpp
+
+	Test out various sorting algorithms using STL containers and raw version.  Coded with a datatype typedef so can be run with int/long/double/etc.  Some surprises on modern architectures.  Short answer though is use stl::sort() unless you need the last bit of performance and can allocate large temporary buffers.
+
 ##### Thread tests
 
 Started working through the c++11 standard on threads.  Turns out the standard committee never intended people to use the primatives directly, but for them to be built into libraries, so took some simple ideas from my old thread library and worked up a couple of examples.

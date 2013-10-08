@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <future>
 #include <chrono>
+#include <random>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
@@ -397,10 +398,13 @@ void	raw_shell_sort::sort( void)
 	static int	compare_func( const datatype * pa, const datatype * pb )
 					{ datatype delt= * pa - * pb ;  return ( delt > 0 ) ? 1 : (( delt < 0 ) ? -1 : 0 ) ; }
 
+		// default pointer types to qsort void *, not datatype * 
+	typedef int ( * compare_func_t ) ( const void *, const void * ) ;
+
 			// system qsort
 void	raw_qsort::sort( void)
 {
-	qsort( & (sort_[0] ), size_, sizeof( datatype), ( __compar_fn_t ) compare_func) ;
+	qsort( & (sort_[0] ), size_, sizeof( datatype), ( compare_func_t ) compare_func) ;
 }
 
 			// standard template library sort
