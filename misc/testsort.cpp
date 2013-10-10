@@ -121,7 +121,8 @@ class	raw_sorter : public sorters
 		SORTER( bubble_sort, container_sorter, "bubble sort" ) ;
 		SORTER( raw_bubble_sort, raw_sorter, "raw bubble sort" ) ;
 		SORTER( insertion_sort, container_sorter, "insertion sort" ) ;
-		SORTER( raw_insertion_sort, raw_sorter, "raw insertion sort" ) ;
+		SORTER( selection_sort, container_sorter, "selection sort" ) ;
+		SORTER( raw_selection_sort, raw_sorter, "raw selection sort" ) ;
 		SORTER( shell_sort, container_sorter, "shell sort" ) ;
 		SORTER( raw_shell_sort, raw_sorter, "raw shell sort" ) ;
 		SORTER( raw_qsort, raw_sorter, "system qsort" ) ;
@@ -217,6 +218,28 @@ void	raw_bubble_sort::sort( void)
 void	insertion_sort::sort( void)
 {
 	auto pstep= sort_.begin() ;
+	auto pbegin= pstep ;
+	auto plimit= sort_.end() ;
+	datatype dvalue ;
+
+	++ pstep ;
+	while ( pstep < plimit )
+	{
+		auto psear= pstep -1 ;
+		dvalue = * pstep ;
+			// look for the spot that * pstep should be in the already sorted list 
+		while (( psear >= pbegin ) && ( * psear > dvalue )) { -- psear ; }
+		
+		++ psear ;
+			// rotate larger elements around behind * pstep
+		if ( psear < pstep ) { std::rotate( psear, pstep, pstep +1) ; }
+		++ pstep ;
+	}
+}
+
+void	selection_sort::sort( void)
+{
+	auto pstep= sort_.begin() ;
 	auto plimit= sort_.end() ;
 
 	while ( pstep < plimit )
@@ -235,7 +258,7 @@ void	insertion_sort::sort( void)
 	}
 }
 
-void	raw_insertion_sort::sort( void)
+void	raw_selection_sort::sort( void)
 {
 	datatype * pstep, * plook, * pbest, * plimit, dtmp ;
 
@@ -422,7 +445,8 @@ void	simple_test(const containertype & alist)
 	bubble_sort	sbu( alist) ;
 	raw_bubble_sort	rbu( alist) ;
 	insertion_sort sis( alist) ;
-	raw_insertion_sort ris( alist) ;
+	selection_sort ssl( alist) ;
+	raw_selection_sort rsl( alist) ;
 	merge_sort sme( alist) ;
 	raw_merge_sort rme( alist) ;
 	buffered_merge_sort bme( alist) ;
