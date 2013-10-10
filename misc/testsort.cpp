@@ -372,14 +372,18 @@ void	buffered_merge_sort::sort_range( datatype * pfirst, datatype * plast )
 	tmpspan= pmiddle - pfirst ;
 	assert( bufsize_ >= tmpspan ) ;
 
+		// copy first half to the buffer space
 	std::memcpy( & (buffer_[0] ), pfirst, tmpspan * sizeof( datatype)) ;
 	pbufstep= & ( buffer_[0] ), pbuflimit= pbufstep + tmpspan ;
 
-	while ( ( pfirst < pmiddle ) && ( pfirst < plast ) && ( pbufstep < pbuflimit ))
+		// merge the second half and the buffered half together
+	while ( ( pmiddle < plast ) && ( pbufstep < pbuflimit ))
 	{
 		if ( * pbufstep < * pmiddle ) { *( pfirst ++)= *( pbufstep ++) ; }
 			else { *( pfirst ++)= * ( pmiddle ++ ) ; }
 	}
+		// copy any remainders of the buffered list over
+	while ( pbufstep < pbuflimit ) { *( pfirst ++)= *( pbufstep ++) ; }
 }
 
 void	buffered_merge_sort::sort( void)
