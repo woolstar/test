@@ -121,6 +121,7 @@ class	raw_sorter : public sorters
 		SORTER( bubble_sort, container_sorter, "bubble sort" ) ;
 		SORTER( raw_bubble_sort, raw_sorter, "raw bubble sort" ) ;
 		SORTER( insertion_sort, container_sorter, "insertion sort" ) ;
+		SORTER( raw_insertion_sort, raw_sorter, "raw insertion sort" ) ;
 		SORTER( selection_sort, container_sorter, "selection sort" ) ;
 		SORTER( raw_selection_sort, raw_sorter, "raw selection sort" ) ;
 		SORTER( shell_sort, container_sorter, "shell sort" ) ;
@@ -237,6 +238,28 @@ void	insertion_sort::sort( void)
 	}
 }
 
+void	raw_insertion_sort::sort( void)
+{
+	datatype * pbegin, * pstep, * psear, * plimit, dvalue ;
+	size_t recsize = sizeof( datatype) ;
+
+	pbegin= pstep= & (sort_[0] ) ;  pstep ++ ;
+	plimit= & ( sort_[size_] ) ;
+
+	while ( pstep < plimit )
+	{
+		psear= pstep -1, dvalue= * pstep ;
+		while (( psear >= pbegin ) && ( * psear > dvalue )) { psear -- ; } 
+
+		psear ++ ;
+		if ( psear < pstep ) {
+			std::memmove( psear +1, psear, recsize * ( pstep - psear )) ;
+			* psear= dvalue ;
+		}
+		pstep ++ ;
+	}
+}
+
 void	selection_sort::sort( void)
 {
 	auto pstep= sort_.begin() ;
@@ -260,7 +283,7 @@ void	selection_sort::sort( void)
 
 void	raw_selection_sort::sort( void)
 {
-	datatype * pstep, * plook, * pbest, * plimit, dtmp ;
+	datatype * pstep, * plook, * pbest, * plimit, dvalue ;
 
 	pstep= & ( sort_[0] ) ;
 	plimit= & ( sort_[size_] ) ;
@@ -274,7 +297,7 @@ void	raw_selection_sort::sort( void)
 			++ plook ;
 		}
 
-		if ( pbest != pstep ) { dtmp= * pstep, * pstep= * pbest, * pbest= dtmp ; }
+		if ( pbest != pstep ) { dvalue= * pstep, * pstep= * pbest, * pbest= dvalue ; }
 		++ pstep ; 
 	}
 }
@@ -312,7 +335,7 @@ void	raw_merge_sort::sort_range( datatype * pfirst, datatype * plast )
 		sort_range( pfirst, pmiddle) ;
 		sort_range( pmiddle, plast) ;
 
-		datatype dtmp ;
+		datatype dvalue ;
 		size_t recsize = sizeof( datatype) ;
 
 			// in-place merge
@@ -321,10 +344,10 @@ void	raw_merge_sort::sort_range( datatype * pfirst, datatype * plast )
 			if ( * pfirst < * pmiddle ) { ++ pfirst ;  continue ; }
 
 				// shuffle remainder of left around and insert one from the right
-			dtmp= * pmiddle ;
+			dvalue= * pmiddle ;
 			std::memmove( pfirst +1, pfirst, recsize * ( pmiddle - pfirst )) ;
 
-			*( pfirst ++)= dtmp ;  ++ pmiddle ;
+			*( pfirst ++)= dvalue ;  ++ pmiddle ;
 		}
 	}
 }
@@ -352,7 +375,7 @@ void	buffered_merge_sort::sort_range( datatype * pfirst, datatype * plast )
 	std::memcpy( & (buffer_[0] ), pfirst, tmpspan * sizeof( datatype)) ;
 	pbufstep= & ( buffer_[0] ), pbuflimit= pbufstep + tmpspan ;
 
-	while ( ( pfirst < pmiddle ) && ( pmiddle < plast ) && ( pbufstep < pbuflimit ))
+	while ( ( pfirst < pmiddle ) && ( pfirst < plast ) && ( pbufstep < pbuflimit ))
 	{
 		if ( * pbufstep < * pmiddle ) { *( pfirst ++)= *( pbufstep ++) ; }
 			else { *( pfirst ++)= * ( pmiddle ++ ) ; }
@@ -396,7 +419,7 @@ void	shell_sort::sort( void)
 
 void	raw_shell_sort::sort( void)
 {
-	datatype * pstep, * pbest, * pskip, * plimit, dtmp ;
+	datatype * pstep, * pbest, * pskip, * plimit, dvalue ;
 	unsigned long hgap= size_ / 2 ;
 
 	plimit= & (sort_[size_]) ;
@@ -411,7 +434,7 @@ void	raw_shell_sort::sort( void)
 				if ( * pskip < * pbest ) { pbest= pskip ; }
 				pskip += hgap ;
 			}
-			if ( pbest != pstep ) { dtmp= * pstep, * pstep= * pbest, * pbest= dtmp ; }
+			if ( pbest != pstep ) { dvalue= * pstep, * pstep= * pbest, * pbest= dvalue ; }
 			++ pstep ;
 		}
 
@@ -445,6 +468,7 @@ void	simple_test(const containertype & alist)
 	bubble_sort	sbu( alist) ;
 	raw_bubble_sort	rbu( alist) ;
 	insertion_sort sis( alist) ;
+	raw_insertion_sort ris( alist) ;
 	selection_sort ssl( alist) ;
 	raw_selection_sort rsl( alist) ;
 	merge_sort sme( alist) ;
