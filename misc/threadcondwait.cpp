@@ -36,7 +36,7 @@
 
 std::condition_variable cv;
 std::mutex cv_m;
-std::atomic<int> i = 0 ;
+std::atomic<int> i = { 0 } ;
  
 void waits(int idx)
 {
