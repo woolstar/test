@@ -1,3 +1,4 @@
+#include <cstdint>
 
 	// Compile time Sum
 
@@ -12,8 +13,8 @@ static_assert(Sum<1, 2, 3, 4>::value == 10, "") ;
 
 template <unsigned bits> struct Store ;
 
-template <> struct Store<8> { typedef uint8_t Type ; }
-template <> struct Store<32> { typedef uint32_t Type ; }
+template <> struct Store<8> { typedef uint8_t Type ; } ;
+template <> struct Store<32> { typedef uint32_t Type ; } ;
 
 	// def
 
@@ -27,11 +28,6 @@ class Bitfields {
 
 	} ;
 
-	// value
-
-template <unsigned pos, unsigned... sizes>
-	unsigned get(Bitfields<sizes...> bf) { return getImpl<pos, 0>(bf) ; }
-
 	// impl
 
 template <unsigned pos, unsigned b4, unsigned size, unsigned... sizes>
@@ -39,7 +35,7 @@ template <unsigned pos, unsigned b4, unsigned size, unsigned... sizes>
 	{
 		static_assert(pos <= sizeof...(sizes), "Invalid bitfield access") ;
 		if ( 0 == pos ) {
-			if ( 1 == size ) { return (bf.store & 1u << b4)) != 0 ; }
+			if ( 1 == size ) { return (bf.store & 1u << b4) != 0 ; }
 			return ( bf.store >> b4) & (( 1u << size) -1 ) ;
 		}
 		return getImpl<pos - (pos ? 1 : 0), b4 + (pos ? size : 0)>(bf) ;
@@ -50,4 +46,9 @@ template <unsigned pos, unsigned b4, unsigned size, unsigned... sizes>
 	// and avoides having to have two cases that sepcialize for pos > 0 & 0.
 
 	// on the border of clever
+
+	// value
+
+template <unsigned pos, unsigned... sizes>
+	unsigned get(Bitfields<sizes...> bf) { return getImpl<pos, 0>(bf) ; }
 
