@@ -1,0 +1,22 @@
+
+CC=gcc-4.8
+CXX=g++-4.8
+CFLAGS=-g -std=c++11
+LIBS=-lstdc++ -lpthread
+
+.cpp.o:
+	$(CXX) $(CFLAGS) -c $<
+
+.cpp:
+	$(CXX) $(CFLAGS) $< $(LIBS) -o $@
+
+TARGETS=testchaining testextent testsort \
+	threadcondwait threadhandoff threadtest testvariadic.o
+
+all: $(TARGETS)
+
+extra: testerror
+
+clean:
+	rm -f $(TARGETS)
+

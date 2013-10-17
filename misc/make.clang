@@ -1,0 +1,24 @@
+
+CC=clang
+CXX=clang++
+
+	## ugly defines to deal with gnu libc++ changes, maybe fixed post clan 3.2
+CFLAGS=-g -std=c++11 -D__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1 -D__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2 -D__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4 -D__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8
+LIBS=-lstdc++ -lpthread -lm
+
+.cpp.o:
+	$(CXX) $(CFLAGS) -c $<
+
+.cpp:
+	$(CXX) $(CFLAGS) $< $(LIBS) -o $@
+
+TARGETS=testchaining testextent testsort \
+	threadcondwait threadhandoff threadtest testvariadic.o
+
+all: $(TARGETS)
+
+extra: testerror
+
+clean:
+	rm -f $(TARGETS)
+
