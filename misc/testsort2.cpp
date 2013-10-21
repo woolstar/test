@@ -158,7 +158,6 @@ struct raw_selection_sort {
 
 	// SHELL SORT
 	// - supposedly the best nonrecursive sort out there
-	// - but modern performance is lacking
 	//
 
 struct container_shell_sort
@@ -179,7 +178,7 @@ struct container_shell_sort
 				auto psear= pstep - hgap ;
 				auto pfollow= pstep ;
 				dvalue= *( pstep) ;
-				while (( psear > afirst ) && ( dvalue < * psear ))
+				while (( psear >= afirst ) && ( dvalue < * psear ))
 					{ * pfollow= * psear, pfollow= psear ;  psear -= hgap ; }
 				* pfollow= dvalue ;
 			}
@@ -335,17 +334,15 @@ struct stl_sort {
 
 	// Framework: initializer, run & timer
 
-class	Runner
+struct	Runner
 {
-	public:
-		Runner(const containtype & asrc) : sort_( asrc) {}
-		virtual ~ Runner() {}
+	Runner(const containtype & asrc) : sort_( asrc) {}
+	virtual ~ Runner() {}
 
-		virtual	void dosort(void) = 0 ;
-		virtual const char * name(void) const = 0 ;
+	virtual	void dosort(void) = 0 ;
+	virtual const char * name(void) const = 0 ;
 
-	protected:
-		containtype sort_ ;
+	containtype sort_ ;
 } ;
 
 template <typename _uFunct> class TCRunner : public Runner
@@ -378,6 +375,13 @@ template <typename _uFunct> class TRRunner : public Runner
 		_uFunct	op_ ;
 } ;
 
+	template <typename TCon> void print_range( TCon const & acon )
+	{
+		std::cerr << '[' ;
+		for ( const auto & i : acon ) { std::cerr << ' ' << i << ',' ; }
+		std::cerr << "]\n" ;
+	}
+
 	typedef std::chrono::duration<double, std::milli>	timespan ;
 
 	using std::cout ;
@@ -407,6 +411,13 @@ void	simple_test( const containtype & alist )
 
 		timespan dt = high_resolution_clock::now() - tstart ;
 		cout << std::setprecision( 9) << 0.1 * std::floor( 10. * dt.count() ) << " ms\n" ;
+
+		if ( ! std::is_sorted( sorter-> sort_.begin(), sorter-> sort_.end() ))
+		{
+			cout << "-- invalid result\n" ;
+			if ( sorter-> sort_.size() < 200 )
+				print_range( sorter-> sort_ ) ;
+		}
 	}
 }
 
@@ -414,7 +425,7 @@ void	simple_test( const containtype & alist )
 	{
 		std::random_device	rd ;
 		std::mt19937 gen( rd()) ;
-		std::uniform_real_distribution<> spread( 0., 100000000.) ;
+		std::uniform_real_distribution<> spread( 0., 10. * n) ;
 
 		zdest.reserve( n) ;
 		while ( n -- ) { zdest.push_back( spread( gen)) ; }
