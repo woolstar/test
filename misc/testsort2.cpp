@@ -4,7 +4,10 @@
 #include <memory>
 #include <random>
 #include <iostream>
+#include <iomanip>
+#include <chrono>
 #include <cstring>
+#include <cmath>
 #include <cassert>
 
 		// datatype
@@ -375,6 +378,11 @@ template <typename _uFunct> class TRRunner : public Runner
 		_uFunct	op_ ;
 } ;
 
+	typedef std::chrono::duration<double, std::milli>	timespan ;
+
+	using std::cout ;
+	using std::chrono::high_resolution_clock ; ;
+
 void	simple_test( const containtype & alist )
 {
 	for ( auto & sorter : {
@@ -384,18 +392,24 @@ void	simple_test( const containtype & alist )
 			TCRunner<stl_sort>::generate( alist)
 		} )
 	{
-		std::cout << "Found " << sorter-> name() << ".\n" ;
+		std::cout << "Sort " << sorter-> name() << ": " ;
+
+		auto tstart= high_resolution_clock::now() ;
+		sorter-> dosort() ;
+
+		timespan dt = high_resolution_clock::now() - tstart ;
+		cout << std::setprecision( 9) << 0.1 * std::floor( 10. * dt.count() ) << " ms\n" ;
 	}
 }
 
-	static void	generate( int n, containtype zdest)
+	static void	generate( int n, containtype & zdest)
 	{
 		std::random_device	rd ;
 		std::mt19937 gen( rd()) ;
 		std::uniform_real_distribution<> spread( 0., 100000000.) ;
 
 		zdest.reserve( n) ;
-		while ( n -- ) { data.push_back( spread( gen)) ; }
+		while ( n -- ) { zdest.push_back( spread( gen)) ; }
 	}
 
 int main(int N, char ** S)
