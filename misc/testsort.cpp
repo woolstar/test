@@ -94,7 +94,7 @@ class	raw_sorter : public sorters
 {
 	public:
 		raw_sorter(const containertype & alist) : sort_( new datatype[ alist.size() ] ), size_( alist.size())
-			{ std::copy( alist.begin(), alist.end(), & (sort_[0] ) ) ; }
+			{ std::copy( alist.begin(), alist.end(), sort_.get() ) ; }
 		void	doprint(void) const { print_range( & (sort_[0]), & (sort_[size_]) ) ; }
 
 	protected:
@@ -206,7 +206,7 @@ void	raw_bubble_sort::sort( void)
 
 	do
 	{
-		p1= & (sort_[0] ), p2= p1 +1, ctswaps= 0 ;
+		p1= sort_.get(), p2= p1 +1, ctswaps= 0 ;
 		while ( p2 < plimit )
 		{
 			if ( * p2 < * p1 ) { std::iter_swap( p1, p2) ;  ctswaps ++ ; }
@@ -243,7 +243,7 @@ void	raw_insertion_sort::sort( void)
 	datatype * pbegin, * pstep, * psear, * plimit, dvalue ;
 	size_t recsize = sizeof( datatype) ;
 
-	pbegin= pstep= & (sort_[0] ) ;  pstep ++ ;
+	pbegin= pstep= sort_.get() ;  pstep ++ ;
 	plimit= & ( sort_[size_] ) ;
 
 	while ( pstep < plimit )
@@ -285,7 +285,7 @@ void	raw_selection_sort::sort( void)
 {
 	datatype * pstep, * plook, * pbest, * plimit, dvalue ;
 
-	pstep= & ( sort_[0] ) ;
+	pstep= sort_.get() ;
 	plimit= & ( sort_[size_] ) ;
 
 	while ( pstep < plimit )
@@ -430,7 +430,7 @@ void	raw_shell_sort::sort( void)
 
 	while ( hgap )
 	{
-		pstep= & (sort_[0] ) ; 
+		pstep= sort_.get() ; 
 		while ( pstep < plimit )
 		{
 			pbest= pstep, pskip= pstep + hgap ;
@@ -455,7 +455,7 @@ void	raw_shell_sort::sort( void)
 			// system qsort
 void	raw_qsort::sort( void)
 {
-	qsort( & (sort_[0] ), size_, sizeof( datatype), ( compare_func_t ) compare_func) ;
+	qsort( sort_.get(), size_, sizeof( datatype), ( compare_func_t ) compare_func) ;
 }
 
 			// standard template library sort
