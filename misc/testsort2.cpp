@@ -70,7 +70,7 @@ struct raw_bubble_sort {
 	// - involves almost as many moves as bubble sort, but runs way better
 	//
 struct container_insertion_sort {
-	void operator()(containtype::iterator & afirst, containtype::iterator & alast)
+	void operator()(containtype::iterator afirst, containtype::iterator alast)
 	{
 		auto pstep= afirst + 1 ;
 		datatype dvalue ;
@@ -122,8 +122,8 @@ struct raw_insertion_sort {
 	// SELECTION SORT
 	// - less moves, but ends up being worse than insertion sort
 	//
-struct selection_sort {
-	void operator()(containtype::iterator & afirst, containtype::iterator & alast)
+struct container_selection_sort {
+	void operator()(containtype::iterator afirst, containtype::iterator alast)
 	{
 		while ( afirst < alast )
 		{
@@ -161,9 +161,9 @@ struct raw_selection_sort {
 	// - but modern performance is lacking
 	//
 
-struct shell_sort
+struct container_shell_sort
 {
-	void operator()(containtype::iterator & afirst, containtype::iterator & alast)
+	void operator()(containtype::iterator afirst, containtype::iterator alast)
 	{
 		unsigned long hgap= alast - afirst ;
 		unsigned long tco ;
@@ -203,7 +203,7 @@ struct raw_shell_sort
 	//
 
 struct container_merge_sort {
-	void operator()(containtype::iterator & afirst, containtype::iterator & alast)
+	void operator()(containtype::iterator afirst, containtype::iterator alast)
 	{
 		size_t delta= alast - afirst ;
 		if ( delta > 1 )
@@ -297,7 +297,7 @@ class buffered_merge_sort {
 			subsort( afirst, alast) ;
 		}
 
-		const char * name(void) const { return "raw merge sort" ; }
+		const char * name(void) const { return "buffered merge sort" ; }
 
 	private:
 		std::unique_ptr< datatype[] >	buffer_ ;
@@ -388,6 +388,14 @@ void	simple_test( const containtype & alist )
 	for ( auto & sorter : {
 			TCRunner<container_bubble_sort>::generate( alist),
 			TRRunner<raw_bubble_sort>::generate( alist ),
+			TCRunner<container_insertion_sort>::generate( alist),
+			TRRunner<raw_insertion_sort>::generate( alist ),
+			TCRunner<container_selection_sort>::generate( alist),
+			TRRunner<raw_selection_sort>::generate( alist ),
+			TCRunner<container_shell_sort>::generate( alist),
+			TCRunner<container_merge_sort>::generate( alist),
+			TRRunner<raw_merge_sort>::generate( alist),
+			TRRunner<buffered_merge_sort>::generate( alist),
 			TRRunner<raw_qsort>::generate( alist),
 			TCRunner<stl_sort>::generate( alist)
 		} )
