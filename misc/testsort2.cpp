@@ -66,6 +66,43 @@ struct raw_bubble_sort {
 	const char * name(void) const { return "raw bubble sort" ; }
 } ;
 
+	// SELECTION SORT
+	// - less moves, but ends up being worse than insertion sort
+	//
+struct container_selection_sort {
+	void operator()(containtype::iterator afirst, containtype::iterator alast)
+	{
+		while ( afirst < alast )
+		{
+				// look for a lower value in the rest of the list than what's at * afirst
+			auto plook= afirst, pbest= afirst ;
+			for ( ++ plook ; ( plook < alast ) ; ++ plook )
+				{ if ( * plook < * pbest ) { pbest= plook ; } }
+			if ( pbest != afirst ) { std::iter_swap( afirst, pbest) ; }
+			++ afirst ;
+		}
+	}
+
+	const char * name(void) const { return "selection sort" ; }
+} ;
+
+struct raw_selection_sort {
+	void operator()(datatype * afirst, datatype * alast)
+	{
+		datatype * plook, * pbest, dvalue ;
+
+		while ( afirst < alast )
+		{
+			for ( pbest= afirst, plook= afirst +1 ; ( plook < alast ) ; ++ plook )
+				{ if ( * plook < * pbest ) { pbest= plook ; } }
+			if ( pbest != afirst ) { std::iter_swap( afirst, pbest) ; }
+			++ afirst ;
+		}
+	}
+
+	const char * name(void) const { return "raw selection sort" ; }
+} ;
+
 	// INSERTION SORT
 	// - involves almost as many moves as bubble sort, but runs way better
 	//
@@ -117,43 +154,6 @@ struct raw_insertion_sort {
 	}
 
 	const char * name(void) const { return "raw insertion sort" ; }
-} ;
-
-	// SELECTION SORT
-	// - less moves, but ends up being worse than insertion sort
-	//
-struct container_selection_sort {
-	void operator()(containtype::iterator afirst, containtype::iterator alast)
-	{
-		while ( afirst < alast )
-		{
-				// look for a lower value in the rest of the list than what's at * afirst
-			auto plook= afirst, pbest= afirst ;
-			for ( ++ plook ; ( plook < alast ) ; ++ plook )
-				{ if ( * plook < * pbest ) { pbest= plook ; } }
-			if ( pbest != afirst ) { std::iter_swap( afirst, pbest) ; }
-			++ afirst ;
-		}
-	}
-
-	const char * name(void) const { return "selection sort" ; }
-} ;
-
-struct raw_selection_sort {
-	void operator()(datatype * afirst, datatype * alast)
-	{
-		datatype * plook, * pbest, dvalue ;
-
-		while ( afirst < alast )
-		{
-			for ( pbest= afirst, plook= afirst +1 ; ( plook < alast ) ; ++ plook )
-				{ if ( * plook < * pbest ) { pbest= plook ; } }
-			if ( pbest != afirst ) { std::iter_swap( afirst, pbest) ; }
-			++ afirst ;
-		}
-	}
-
-	const char * name(void) const { return "raw selection sort" ; }
 } ;
 
 	// SHELL SORT
@@ -392,10 +392,10 @@ void	simple_test( const containtype & alist )
 	for ( auto & sorter : {
 			TCRunner<container_bubble_sort>::generate( alist),
 			TRRunner<raw_bubble_sort>::generate( alist ),
-			TCRunner<container_insertion_sort>::generate( alist),
-			TRRunner<raw_insertion_sort>::generate( alist ),
 			TCRunner<container_selection_sort>::generate( alist),
 			TRRunner<raw_selection_sort>::generate( alist ),
+			TCRunner<container_insertion_sort>::generate( alist),
+			TRRunner<raw_insertion_sort>::generate( alist ),
 			TCRunner<container_shell_sort>::generate( alist),
 			TCRunner<container_merge_sort>::generate( alist),
 			TRRunner<raw_merge_sort>::generate( alist),
