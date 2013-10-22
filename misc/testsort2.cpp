@@ -433,13 +433,13 @@ void	simple_test( const containtype & alist )
 			TCRunner<stl_sort>::generate( alist)
 		} )
 	{
-		std::cout << "Sort " << sorter-> name() << ": " ;
+		std::cout << sorter-> name() << ": " ;
 
 		auto tstart= high_resolution_clock::now() ;
 		sorter-> dosort() ;
 
 		timespan dt = high_resolution_clock::now() - tstart ;
-		cout << std::setprecision( 9) << 0.1 * std::floor( 10. * dt.count() ) << " ms\n" ;
+		cout << std::setprecision( 9) << 0.01 * std::floor( 100. * dt.count() ) << " ms\n" ;
 
 		if ( ! std::is_sorted( sorter-> sort_.begin(), sorter-> sort_.end() ))
 		{
