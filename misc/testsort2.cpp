@@ -192,6 +192,24 @@ struct raw_shell_sort
 {
 	void operator()(datatype * afirst, datatype * alast)
 	{
+		unsigned long hgap= alast - afirst ;
+		unsigned long tco ;
+		datatype * pstep, * psear, * pfollow, dvalue ;
+
+			// Sedgewick gap cooef
+		for ( tco= 1 ; ( ( 4 * tco * tco ) <= hgap ) ; tco += tco ) { } ;
+		for ( hgap /= 4 ; ( tco > 0 ) ; tco /= 2, hgap= ( tco * tco ) - ( 3 * tco )/2 + 1 )
+		{
+			for (pstep= afirst + hgap  ; ( pstep < alast ) ; ++ pstep )
+			{
+				for (psear= pstep - hgap, pfollow= pstep, dvalue= *( pstep) ;
+						(( psear >= afirst ) && ( dvalue < * psear )) ;
+						pfollow= psear, psear -= hgap )
+					{ * pfollow= * psear ; }
+
+				* pfollow= dvalue ;
+			}
+		}
 	}
 
 	const char * name(void) const { return "raw shell sort" ; }
@@ -387,18 +405,29 @@ template <typename _uFunct> class TRRunner : public Runner
 	using std::cout ;
 	using std::chrono::high_resolution_clock ; ;
 
+#ifndef SLOW_TESTS
+#	define	SLOW_TESTS	0
+#endif
+
 void	simple_test( const containtype & alist )
 {
 	for ( auto & sorter : {
+
+#if SLOW_TESTS
 			TCRunner<container_bubble_sort>::generate( alist),
 			TRRunner<raw_bubble_sort>::generate( alist ),
 			TCRunner<container_selection_sort>::generate( alist),
 			TRRunner<raw_selection_sort>::generate( alist ),
 			TCRunner<container_insertion_sort>::generate( alist),
 			TRRunner<raw_insertion_sort>::generate( alist ),
+#endif
+
 			TCRunner<container_shell_sort>::generate( alist),
+			TRRunner<raw_shell_sort>::generate( alist),
 			TCRunner<container_merge_sort>::generate( alist),
+#if SLOW_TESTS
 			TRRunner<raw_merge_sort>::generate( alist),
+#endif
 			TRRunner<buffered_merge_sort>::generate( alist),
 			TRRunner<raw_qsort>::generate( alist),
 			TCRunner<stl_sort>::generate( alist)
@@ -437,11 +466,12 @@ int main(int N, char ** S)
 	int ival= 0 ;
 
 	N --, S ++ ;
+	if ( N && ('-' == ** S)) { std::cerr << "Usage:  testsort <n>  -- specify number of items to sort\n" ;  exit( 1) ; }
+
 	if ( N ) { ival= atoi( * S) ;  N --, S ++ ; }
 	if ( ! ival ) ival= 10000 ;
 
 	generate( ival, data) ;
 	simple_test( data) ;
 }
-
 
