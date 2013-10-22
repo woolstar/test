@@ -52,8 +52,9 @@ Simple tools and library tests.
 	A non-trivial example of using constructor chaining, and also hacking at unique_ptr<>
 
 * testsort.cpp
+* testsort2.cpp
 
-	Test out various sorting algorithms using STL containers and raw version.  Coded with a datatype typedef so can be run with int/long/double/etc.  Some surprises on modern architectures.  Short answer though is use stl::sort() unless you need the last bit of performance and can allocate large temporary buffers.
+	Test out various sorting algorithms using STL containers and raw version.  Coded with a datatype typedef so can be run with int/long/double/etc.  Some surprises on modern architectures.  Short answer though is use stl::sort(), though modern shell sort (Sedgewick) comes within a factor of 2 with no recursion or required memory.
 
 ##### Thread tests
 
