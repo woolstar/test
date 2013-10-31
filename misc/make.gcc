@@ -11,7 +11,7 @@ LIBS=-lstdc++ -lpthread
 	$(CXX) $(CFLAGS) $< $(LIBS) -o $@
 
 TARGETS=testchaining testextent testsort \
-	threadcondwait threadhandoff threadtest testvariadic.o
+	testvariadic.o
 
 all: $(TARGETS)
 
