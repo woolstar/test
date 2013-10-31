@@ -27,10 +27,6 @@ Simple tools and library tests.
 	Uses a data driven command set for easy expansion automatic help text generation.
 	The code is the best documentation right now.  Also led to all kinds of work to get unicode support setup across machines so I could print the pi symbol.
 
-* elist.h
-
-	Experiments on my old list templates, eventually to be moved to tools.  Allows simple list traversal using auto-pointer-iterator sub-class.  CCurrently contains mixins for singlely linked, doubly linked, destoryer method and functional programming primatives.  Test suite uses c++11 standard lambdas to demonstrate the FP methods.
-
 * randnum_y.html, randum_test.html
 
 	Simple YUI/PureCSS dom nodes lib and a little progressive refinement layout.  Generates random digits (none repeating) for game email accounts.  Test version generates a couple rows of numbers between 1 and 5/10/50.

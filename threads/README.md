@@ -21,3 +21,7 @@ Tests compiled with GCC 4.6 (linux), GCC 4.7 (cygwin) and Visual Studio Express 
 
 	Build a primative (econduit) for passing work from multiple producers to one or more consumers.  No balancing mechanisms, but figured out how to use lamdas for building predicates that the conditional variable method needed.
 
+* elist.h
+
+	Experiments on my old list templates, eventually to be moved to tools.  Allows simple list traversal using auto-pointer-iterator sub-class.  Currently contains mixins for singlely linked, doubly linked, destoryer method and functional programming primatives.  Test suite uses c++11 standard lambdas to demonstrate the FP methods.
+
