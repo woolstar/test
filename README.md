@@ -7,4 +7,5 @@ test code exploring various tech
 * encode :: ascii85 encode decode routines
 * misc :: one time tests
 * node :: module tests and experiments
+* threads :: testing c++11 thread api
 
