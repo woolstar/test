@@ -49,6 +49,9 @@ Simple tools and library tests.
 
 * testsort.cpp
 * testsort2.cpp
+* testsort3.cpp
 
 	Test out various sorting algorithms using STL containers and raw version.  Coded with a datatype typedef so can be run with int/long/double/etc.  Some surprises on modern architectures.  Short answer though is use stl::sort(), though modern shell sort (Sedgewick) comes within a factor of 2 with no recursion or required memory.
+
+	Gen 1 was very oldschool, with macros (ugh), self organizing units of work into a singleton list and a fair amount of cruft.  Gen 2 was a bit more clever, using gymnastics to assemble all the algorithms into a initializer_list.  Gen 3 moved the work class into more modern style of type hiding and helper polymorphic functions, as well as templating some of the sort routines.
 
