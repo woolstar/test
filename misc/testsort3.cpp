@@ -355,7 +355,7 @@ struct stl_sort {
 
 	////
 
-	// Framework: initializer, run & timer
+	// Framework: initializer and adapter
 
 class	Runner
 {
