@@ -55,3 +55,7 @@ Simple tools and library tests.
 
 	Gen 1 was very oldschool, with macros (ugh), self organizing units of work into a singleton list and a fair amount of cruft.  Gen 2 was a bit more clever, using gymnastics to assemble all the algorithms into a initializer_list.  Gen 3 moved the work class into more modern style of type erasure and helper polymorphic functions, as well as templating some of the sort routines.
 
+* testspots.cpp
+
+	Type erasure, with a const concept_t so there shouldn't be any variant state stored in the adapter helper object, but we do want to be able to change the concept mid stream, even from the helper (which is const), so throw around some mutable hacking to make it all pretty.
+
