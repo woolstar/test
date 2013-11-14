@@ -47,7 +47,7 @@ Simple tools and library tests.
 
 	A non-trivial example of using constructor chaining, and also hacking at unique_ptr<>
 
-* testsort.cpp
+* testsort1.cpp
 * testsort2.cpp
 * testsort3.cpp
 
