@@ -31,6 +31,13 @@ Simple tools and library tests.
 
 	Simple YUI/PureCSS dom nodes lib and a little progressive refinement layout.  Generates random digits (none repeating) for game email accounts.  Test version generates a couple rows of numbers between 1 and 5/10/50.
 
+Test/experiments
+====
+
+* 100doors.c
+
+	Implemented the 100 Doors puzzle from rosetta code, as a contrast to the previous implementation which was Pascal written in C (all array indexing).
+
 * sicp_sqrt.html
 
 	Calculation of sqrt assigment from Structure and Interpretation of Computer Programs ([mitpress.mit.edu/sicp](http://mitpress.mit.edu/sicp/)), version one with fixed error test, and second with scaled error test.
