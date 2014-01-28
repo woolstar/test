@@ -11,7 +11,7 @@ LIBS=-lstdc++ -lpthread
 	$(CXX) $(CFLAGS) $< $(LIBS) -o $@
 
 TARGETS=testchaining testextent testsort testsort2 testsort3 \
-	testvariadic.o
+	testvariadic.o testswapo
 
 all: $(TARGETS)
 

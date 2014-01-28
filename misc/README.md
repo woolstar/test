@@ -66,3 +66,7 @@ Test/experiments
 
 	Type erasure, with a const concept_t so there shouldn't be any variant state stored in the adapter helper object, but we do want to be able to change the concept mid stream, even from the helper (which is const), so throw around some mutable hacking to make it all pretty.
 
+* testswapo.cpp
+
+	Defining a templated class in a custom namespace, and then getting std::algorithm to use a custom swap operator for it.  This is the receipe.
+
