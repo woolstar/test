@@ -5,6 +5,8 @@
 
 	use 5.012 ;
 
+	no if $] >= 5.018, warnings => 'experimental::smartmatch' ;
+
 sub parsetime
 {
 	my $s= shift ;
