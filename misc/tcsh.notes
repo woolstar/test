@@ -1,0 +1,5 @@
+
+For the last two weeks my login shells (tcsh) were locking up on startup, and I had to ^C to get to a prompt.  Finally ran strace on one, and found it stuck in F_SETLKW, and with a little creative googling found a redhat 6 update advisory ( https://rhn.redhat.com/errata/RHBA-2012-0687.html ).
+
+They now are locking the .history file for each shell so multiple processes don't stomp on each other.  Removing my (empty) .history file fixed it.  Ugh.
+
