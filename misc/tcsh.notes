@@ -1,5 +1,123 @@
 
-For the last two weeks my login shells (tcsh) were locking up on startup, and I had to ^C to get to a prompt.  Finally ran strace on one, and found it stuck in F_SETLKW, and with a little creative googling found a redhat 6 update advisory ( https://rhn.redhat.com/errata/RHBA-2012-0687.html ).
+For the last two weeks my login shells (tcsh) were locking up on
+startup, and I had to ^C to get to a prompt.  Finally ran strace on
+one, and found it stuck in F_SETLKW, and with a little creative
+googling found a redhat 6 update advisory ( https://rhn.redhat.com/errata/RHBA-2012-0687.html ).
 
-They now are locking the .history file for each shell so multiple processes don't stomp on each other.  Removing my (empty) .history file fixed it.  Ugh.
+They now are locking the .history file for each shell so multiple
+processes don't stomp on each other.  Removing my (empty) .history file fixed it.  Ugh.
+
+----
+
+Technological Stratum
+
+If you're going to hitch your wagon to an evolutionary dead end, you better be
+good at fixing a flat.
+<p>
+
+<img alt="geologic strata" align=right src="http://extreme.infomagic.net/static/geologic_strata.jpg" />
+
+In the beginning (for the purposes of our story) was Unix and C.  And it was good.  You had your shell <tt>/bin/sh</tt>, the wonderful <tt>/bin/[</tt> for all your filesystem commands, and anything else you just wrote a program for.
+<p>
+
+But as soon as there were more than a few users on a machine sharing a common login script, things got a little complicated.  Add in the fact that Unix was designed to be portable, and you had scripts that were running in slightly different environments on different machines, and the need for some logic in these scripts became obvious.
+<p>
+
+For no understandable reason, the systax for these basic logic statements was bizarre,
+<p>
+
+<pre>
+    if [ "$uid" -ge 100 ]
+    then
+      echo "Mere mortal"
+    fi
+</pre>
+<p>
+
+As anyone who's moved from rails to node will tell you, having one syntax beats switching your mental model back and forth constantly.  And it was no different back then.  Programmers have been universally lazy since the dawn of time--that's why we have so many cool toys.  So finally when one particularly impatient programmer had had enough, he decided that there should be a shell that used the same sort of syntax for control that the C programming language used.  Thus was born the C shell, or <tt>csh</tt> for short.
+<p>
+
+Unfortunately that programmer went on to write many other interesting things, like VI, NFS and Java; and the shell was closely associated with Berkeley BSD, so it did not spread out as fast as a competitor written by David Korn at Bell Labs which became part of the System V distribution widely licensed or copied by such workstation vendors as HP, DEC, IBM and SGI.
+<p>
+
+Finally as the personal computer advanced into the Unix domain, Brian Fox at the GNU Project wrote a open source shell called Bash which again used a compatible syntax with bourne shell.
+<p>
+
+Not that <tt>csh</tt> didn't get any love, Ken Greer had been working on a TENEX like file completition library, and finally patched it into a version of <tt>csh</tt> which he called <tt>tcsh</tt>.  It gained additional following when it was made the default shell for Mac OS X originally, though Apple later gave into popular pressure and changed the default to <tt>bash</tt>.
+<p>
+
+By this time however, machines were faster (megahertz clock speeds), bigger (megabyte memories, gigabyte hard drives), and could support more cycles catering to the user with actual interpreted languages which grew in leaps and bounds.  In short order you had your choice of perl, python, tcl, php, ruby and more.  And there was no longer any good reason to try and do anything serious in a shell script.  A few people kept trying, but nobody took them seriously.
+<p>
+
+But there are those of us who had to get something done back before the dust had settled, and we picked the best tool we could, and we got as good at is as we good.  And once you have your login script which customizes things you want it, there's really not a good reason to change it.
+
+<img alt="c shell field guide" src="http://extreme.infomagic.net/static/cshell_fieldguide.gif">
+<p>
+
+So I still use <tt>csh</tt>, well <tt>tcsh</tt> so I can tab complete things once in a while, but my <tt>.cshrc</tt> was written many years ago, and except for changing the names of a few directories, its stayed about the same.  But I know I'm out on the fringe, and someday the last of us will logoff, and <tt>tcsh</tt> will be nothing more that a curiosity that computer re-enactment history buffs play with on the weekends.
+<p>
+
+And when something breaks, your're mostly on your own.
+<p>
+
+Like it did a few weeks back at work.
+<p>
+
+I fired up my terminals for the week, like I do every Monday, but instead of showing my a welcoming prompt, the cursor just sat there like the machine was dead.  Being the impatient programmer that I was, I hit the interrupt key (^C for mortals), and was rewarded with a prompt.  Hmmm.  Everything else looked normal, so I interrupted all my terminals and went on about my business.
+<p>
+
+There was more though.  I went to kill a sub-tab in <tt>urxvt</tt>, and it just stayed there.  Wasn't taking input anymore, but it wasn't cleaning up and exiting.  Another interrupt character, and its gone.  But its getting more annoying.  The pattern kept repeating itself: create a new sub-tab, interrupt to get it ready; close the tab, interrupt to get it to go away.
+<p>
+
+Next week I come in, Monday morning and the machines rebooted, so I have to interrupt all my windows to wake them up.  But I have other fish to fry, so I just get around it and go about my business.
+<p>
+
+Third week begins.  I login--same situation.  Ok, my extreme laziness now takes effect.  Time to figure out what's going on.
+<p>
+
+First I hunt down all the scripts that the shell executes when it logs in and logs out.  There's a different list for login shells, and non login shells are behaving just fine for me.  Check out the scripts, run each of them manually, that's not the problem.
+<p>
+
+We're going to have to poke into the guts of the shell and try to catch it while its stuck.  Back in the early days, the tool of choice was <tt>dbx</tt>, even for programs without debugging symbols or source.  You could still observe basic call chains and if you were clever enough, even follow along in the assembly as the program went from one state to another.  There was this one time at a client's site, a third party piece of software wouldn't start because it was trying to read an inialization file, and we had the file, we just didn't know <i>where</i> the program wanted it, so I stuck the program in <tt>dbx</tt> and put a breakpoint on <tt>fopen()</tt> and low and behold it was looking in <tt>/var/spool/x</tt> and so we moved the file there and it worked, and the customer thought I was pretty clever--but I digresss.  Thankfully there are some better, more pointed tools at our disposal now.
+<p>
+
+I fire up a new instance of <tt>csh</tt>, because I already have two dozen instances of <tt>tcsh</tt> running in all my windows and I'm too lazy to isolate one to test with.  Then I find its process ID and
+feed it to <tt><b>strace(1)</b></tt>, which gives me this nugget of information:
+<p>
+
+<pre>
+    fcntl(6, F_SETLKW, {type=F_WRLCK, whence=SEEK_SET, start=0, len=0}
+</pre>
+<p>
+
+which is gibberish for stuck locking a file.  Still don't know
+what file is being locked, but its a file that's being accessed
+at both login and logout.
+<p>
+
+A bit of creative searching lands me here,
+<p>
+
+https://rhn.redhat.com/errata/RHBA-2012-0687.html
+<p>
+
+Addressed in this update is the following issue:
+<p>
+
+<quote>
+    When using multiple shells simultaneously, the command history is
+    saved from all shells in one ".history" file ... This update
+    implements file locking mechanism that uses shared readers and an
+    exclusive writer to prevent the ".history" file from being corrupted. 
+</quote>
+
+Hmmm.  Ok, I have a <tt>.history</tt> file, its zero bytes.
+<p>
+
+<pre>
+    rm -f .history
+</pre>
+<p>
+
+Problem solved.
 
