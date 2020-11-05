@@ -5,6 +5,7 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 808eada0-1e60-11eb-1c3a-b9ad04f85133
+## Initial Conditions
 begin
 using Plots
 using LinearAlgebra
@@ -23,12 +24,12 @@ using ODE
 end
 
 # ╔═╡ 508b3ee0-1e72-11eb-3d7c-cd6771480b5c
-## Initial Conditions
+## ODEs and Time Stepping
 #
 # https://www.youtube.com/watch?v=vg5nGfSnyrI
 
 # ╔═╡ 068f89a0-1e71-11eb-173b-7d078ac0b1a8
-## forward iteration
+## forward euler iteration
 begin
 	Vᵤ= [ x₀; ]
 	let ϵ = I + Δt * A
@@ -45,7 +46,7 @@ plot( [0:Δt:T], Vᵤ, layout=2, label=["position" "velocity"], lc=[:green :red]
 plot( Vᵤ[:,2], Vᵤ[:,1], label="", xguide="velocity", yguide="position" )
 
 # ╔═╡ 82de3330-1e71-11eb-24e1-815bd37d089e
-## reverse iteration
+## reverse euler iteration (slightly more stable)
 begin
 	Vᵥ= [ x₀; ]
 	let ϵ = inv(I - Δt * A)
@@ -61,7 +62,9 @@ plot( [0:Δt:T], Vᵥ, layout=2, label=["position" "velocity"], lc=[:green :red]
 # ╔═╡ 1f9c63e2-1e72-11eb-1afe-519b3f4d5bcd
 plot( Vᵥ[:,2], Vᵥ[:,1], label="", xguide="velocity", yguide="position" )
 
-# ╔═╡ 7913cdc0-1e75-11eb-170a-898d1e27ffa0
+# ╔═╡ 5bd40c10-1f20-11eb-31bd-0b4e72e4ff4b
+## using built in solvers, we have to present A as a function
+
 begin
 	function f(t,s)
 		(x,v)=s
@@ -69,6 +72,10 @@ begin
 		dv= -2 * ζ * ω * v - ω * ω * x
 		[ dx ; dv ]
 	end
+end
+
+# ╔═╡ 7913cdc0-1e75-11eb-170a-898d1e27ffa0
+begin
 	Tᵣ, w = ode45( f, [2. ; 0.], 0:Δt:T )
 	Vᵣ = hvcat( 2, (w...)... )
 	plot( Tᵣ, Vᵣ, layout=2, label=["position" "velocity"], lc=[:green :red] )
@@ -91,4 +98,5 @@ end
 # ╠═82de3330-1e71-11eb-24e1-815bd37d089e
 # ╠═a500c180-1e71-11eb-37b0-2bc7da8b93df
 # ╠═1f9c63e2-1e72-11eb-1afe-519b3f4d5bcd
+# ╠═5bd40c10-1f20-11eb-31bd-0b4e72e4ff4b
 # ╠═7913cdc0-1e75-11eb-170a-898d1e27ffa0
