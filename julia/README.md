@@ -16,3 +16,7 @@ Warmup with
 	using Random
 	using BenchmarkTools
 	Pluto.run()
+
+I haven't found an example of Phase Planes in Julia yet, so for now I'm relying on the web page:
+https://aeb019.hosted.uark.edu/pplane.html
+
