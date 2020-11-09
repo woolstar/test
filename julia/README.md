@@ -4,11 +4,15 @@ Follow along as I try to keep up with Steve Brunton ( https://www.youtube.com/c/
 his classes *Beginning Scientific Computing* (AMATH 301) and *Engineering Mathematics* (ME 564).  He does
 the assignments in Matlab, but I attempt to do them in Julia/Pluto.
 
+Also some benchmarking extrapolated from the julia tutorials.
+
 Warmup with
 
     using Pluto
 	using Plots
+	using Statistics
 	using LinearAlgebra
-	using Random
 	using ODE
+	using Random
+	using BenchmarkTools
 	Pluto.run()
