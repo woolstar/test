@@ -11,14 +11,9 @@ Also some benchmarking extrapolated from the julia tutorials.
 
 Warmup with
 
-    using Pluto
-	using Plots
-	using Statistics
-	using LinearAlgebra
-	using ODE
-	using Random
-	using BenchmarkTools
-	Pluto.run()
+    using Pluto ;  using Plots ;  using JLD ;  using JSON ; 
+    using Statistics ;  using LinearAlgebra ;  using ODE ;  using Random ;
+    Pluto.run()
 
 I haven't found an example of Phase Planes in Julia yet, so for now I'm relying on the web page:
 https://aeb019.hosted.uark.edu/pplane.html
