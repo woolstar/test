@@ -16,6 +16,8 @@ Syllabus
 - [Logic, Loops and Interations](./amath301_L2_Logic.jl)
 - [Plotting and Importing/Exporting Data](./amath301_L3_Plotting.jl)
 
+(Suppliments : http://courses.washington.edu/am301/page11/video.html )
+
 #### Week 2 - Linear Systems and Linear Algebra
 
 (Lecture links for matlab, and suppliments : http://courses.washington.edu/am301/page1/page5/video.html )
