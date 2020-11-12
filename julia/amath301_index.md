@@ -13,8 +13,8 @@ Syllabus
 (Lecture links for matlab and python : http://courses.washington.edu/am301/page10/video.html )
 
 - [Vectors and Matrices](./amath301_L1_Vectors.jl)
-- [Logic, Loops and Interations](./math301_L2_Logic.jl)
-- [Plotting and Importing/Exporting Data](./math301_L3_Plotting.jl)
+- [Logic, Loops and Interations](./amath301_L2_Logic.jl)
+- [Plotting and Importing/Exporting Data](./amath301_L3_Plotting.jl)
 
 #### Week 2 - Linear Systems and Linear Algebra
 
