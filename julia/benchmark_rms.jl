@@ -34,21 +34,21 @@ end
 
 # ╔═╡ 6e1e7800-220a-11eb-1a6c-27f61fef490d
 begin
-	const A = 2 * rand(7 * 10^5)
+	const A = 2 * rand(5*10^5)
 	
 	sqrt(mean(A .^ 2. )),
-	sqrt(sum(x->x^x, A)/ length(A)),
+	sqrt(sum(x->x*x, A)/ length(A)),
 	norm(A) / sqrt(length(A))
 end
 
 # ╔═╡ c29dde50-220c-11eb-1d8b-1be102884039
-Tb0 = @benchmarkable sqrt( mean( $A .^ 2.)) ; run( Tb0, seconds=1, samples=8 )
+Tb0 = @benchmarkable sqrt( mean( $A .^ 2)) ; run( Tb0, seconds=1 )
 
 # ╔═╡ 013b0850-220c-11eb-045f-1d8806443ffa
-Tb1 = @benchmarkable sqrt(sum(x->x^x, $A)/ length($A)) ; run( Tb1, seconds=1, samples=8 )
+Tb1 = @benchmarkable sqrt(sum(x->x^2, $A)/ length($A)) ; run( Tb1, seconds=1 )
 
 # ╔═╡ a5427500-220c-11eb-0f7a-db97f380ef6f
-Tb2= @benchmarkable norm($A) / sqrt(length($A)) ; run( Tb2, seconds=1, samples=8 )
+Tb2= @benchmarkable norm($A) / sqrt(length($A)) ; run( Tb2, seconds=1 )
 
 # ╔═╡ f14fc1a0-220c-11eb-098a-558458ecff16
 begin
@@ -60,8 +60,11 @@ begin
 		sqrt( s / length(A) )
 	end
 	Tbf = @benchmarkable rms( $A )
-	run( Tbf, seconds=2, samples=64 )
+	run( Tbf, seconds=2 )
 end
+
+# ╔═╡ f287c514-2715-11eb-27bf-2d6692f4aa43
+rms(A)  ## just to get the definition compiled before the benchmark
 
 # ╔═╡ 8415c05a-254d-11eb-16bb-e38e55c989ef
 if ( isfile( "native_rms_clang.so" ) )
@@ -73,7 +76,7 @@ if ( isfile( "native_rms_clang.so" ) )
 		ccall(( :c_rmsv, Lib_clang_temp ),
 				Float64, (Csize_t, Ptr{Float64},), length(X), X )
 	Tbn = @benchmarkable c_rms( $A ); Tbnv = @benchmarkable c_rmsv( $A )
-	let a =run( Tbn, samples=64 ), b= run( Tbnv, samples=64 )
+	let a =run( Tbn, seconds=2 ), b= run( Tbnv, seconds=2 )
 		tempclean()
 		a,b
 	end
@@ -89,7 +92,7 @@ if ( isfile( "native_rms_gcc.so" ) )
 		ccall(( :c_rmsv, Lib_gcc_tmp ),
 				Float64, (Csize_t, Ptr{Float64},), length(X), X )
 	Tbng = @benchmarkable g_rms( $A ); Tbngv = @benchmarkable g_rmsv( $A )
-	let a =run( Tbng, seconds=2, samples=64 ), b= run( Tbngv, seconds=2, samples=64 )
+	let a =run( Tbng, seconds=2 ), b= run( Tbngv, seconds=2 )
 		tempclean()
 		a,b
 	end
@@ -98,6 +101,7 @@ end
 # ╔═╡ Cell order:
 # ╠═c45132e0-2178-11eb-35d0-5d7d7fe035bf
 # ╠═6e1e7800-220a-11eb-1a6c-27f61fef490d
+# ╠═f287c514-2715-11eb-27bf-2d6692f4aa43
 # ╠═c29dde50-220c-11eb-1d8b-1be102884039
 # ╠═013b0850-220c-11eb-045f-1d8806443ffa
 # ╠═a5427500-220c-11eb-0f7a-db97f380ef6f
