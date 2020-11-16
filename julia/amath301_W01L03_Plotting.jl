@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.7
+# v0.12.10
 
 using Markdown
 using InteractiveUtils
@@ -58,7 +58,7 @@ collect( zip(x3,y3) )
 ## io, where will this go
 begin
 	save("sinx.jld", "x", x3, "y", y3 ) ;
-	open("sinx.json"; lock=true, write=true) do f
+	open("sinx.json", "w") do f
 		JSON.print( f, Dict(:x => x3, :y => y3 ) )
 	end;
 end
