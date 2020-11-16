@@ -20,6 +20,8 @@ Syllabus
 
 - [Computer Bits](./amath301_W01S01_Bits.jl)
 - [Computational Complexity](./amath301_W01S02_Benchmarking.jl)
+- [Vector Elements](./amath301_W01S03_Elements.jl)
+- [Functions](./amath301_W01S04_Functions.jl)
 
 #### Week 2 - Linear Systems and Linear Algebra
 
