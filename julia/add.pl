@@ -14,5 +14,7 @@ sub cat
 for ( <*.jl> ) { @modules { map { /using ([A-Z]\w+)/gm } cat($_) }= undef ; }
  say "add $_" for ( sort keys %modules ) ;
  say "" ;
- say "using $_" for ( sort keys %modules )
+ say "using $_" for ( sort keys %modules ) ;
+
+say "using Pluto ; Pluto.run()"
 

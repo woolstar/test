@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.6
+# v0.12.10
 
 using Markdown
 using InteractiveUtils
@@ -36,8 +36,8 @@ cond( Abad )
 
 # ╔═╡ bde4e230-1f2f-11eb-0155-7be08a6d7de9
 begin
-	Arand = rand( 5000, 5000 )
-	bᵣ = rand( 5000 )
+	Arand = rand( 2000, 2000 )
+	bᵣ = rand( 2000 )
 	
 	xᵣ = Arand \ bᵣ
 end
