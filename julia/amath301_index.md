@@ -25,7 +25,7 @@ Syllabus
 
 #### Week 2 - Linear Systems and Linear Algebra
 
-( Lecture links for matlab, and suppliments : http://courses.washington.edu/am301/page1/page5/video.html )
+( Lecture links and suppliments : http://courses.washington.edu/am301/page1/page5/video.html )
 
 - Vector/Matrix operations
 - [Gaussian Elimination](./amath301_W02L05_Gauss.jl)
@@ -40,9 +40,15 @@ Suppliments
 
 ( Lecture links : http://courses.washington.edu/am301/page1/page6/video.html )
 
+- [Iterative Solving](./amath301_W03L07_Iterative.jl)
+- Eigenvalues/Eigenvectors
+- [Stability and Convergence](./amath301_W03L09_Stability.jl)
+
 #### Week 4 - Curve Fitting
 
-- Least Squars
+( Lecture links and suppliments : http://courses.washington.edu/am301/page2/page13/video.html )
+
+- Least Squares
 - Polynomial Fits
 - Data Fitting
 

@@ -1,6 +1,8 @@
-#!/usr/bin/env perl
+#!/usr/bin/env -S perl -s
 
 use 5.012 ;
+
+use vars qw($go) ;
 
 my %modules ;
 
@@ -12,9 +14,9 @@ sub cat
 }
 
 for ( <*.jl> ) { @modules { map { /using ([A-Z]\w+)/gm } cat($_) }= undef ; }
- say "add $_" for ( sort keys %modules ) ;
- say "" ;
+ unless ( $go ) { say "add $_" for ( sort keys %modules ) }
+ say "" unless $go ;
  say "using $_" for ( sort keys %modules ) ;
 
-say "using Pluto ; Pluto.run()"
+say "using Pluto ; Pluto.run()" if $go ;
 
