@@ -48,8 +48,8 @@ Suppliments
 
 ( Lecture links and suppliments : http://courses.washington.edu/am301/page2/page13/video.html )
 
-- Least Squares
-- Polynomial Fits
+- [Least Squares](./amath301_W04L10_Fit.jl)
+- [Polynomial Fits](./amath301_W04L11_Splines.jl)
 - Data Fitting
 
 #### Week 5 - Optimization

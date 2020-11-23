@@ -18,5 +18,6 @@ for ( <*.jl> ) { @modules { map { /using ([A-Z]\w+)/gm } cat($_) }= undef ; }
  say "" unless $go ;
  say "using $_" for ( sort keys %modules ) ;
 
-say "using Pluto ; Pluto.run()" if $go ;
+say "using Dates\nusing Pluto\nDates.now()" if $go ;
+say "Pluto.run()" if $go ; 
 
