@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.10
+# v0.12.11
 
 using Markdown
 using InteractiveUtils
@@ -125,40 +125,6 @@ end
 # ╔═╡ b8460b54-28eb-11eb-1619-cdffe8ba2c7c
 md"So our luck did not hold here.  In the future we'll work out what this luck is that we need to have for this to work."
 
-# ╔═╡ 1d571a0e-28a3-11eb-266b-376c24ce94d4
-md"So what's going on here.  What we're doing is splitting ``A`` into two parts, the diagonal and the other terms.  ( ``A=D+T`` )  With this we transform ``Ax=b`` into ``Dx+Tx=b`` then we split up the ``D`` and ``T`` terms ``Dx = -Tx +b``.  Put in terms of the iteration, we get:
-
-```math
-
-```
-
-The error between each round is going to be transformed the same way
-```math
-\vec{\epsilon}_{k+1}=-D^{-1}T\vec{\epsilon}_k
-```
-
-"
-
-# ╔═╡ 5a9cb546-28a2-11eb-2e02-f7aa2c556e96
-let D= Diagonal(diag(A)), T= A - D
-	U = -inv(D) * T
-	abs.(eigen( U ).values)
-end
-
-# ╔═╡ a75c9d26-28a2-11eb-3ef0-7b4ca9ba4992
-begin
-	Au = [ -2 1 5; 
-    	  4 -8 1;
-    	  4 -1 1 ]
-	let D= Diagonal(diag(Au)), T= Au - D
-		U = -inv(D) * T
-		abs.(eigen( U ).values)
-	end
-end
-
-# ╔═╡ f430386a-28aa-11eb-3414-c98891f0ea7c
-md"The eigenvalues of the first matrix ``A`` are all less than zero, so ϵ goes to zero.  In the second decomposition of ``Au`` they are not, so its unstable."
-
 # ╔═╡ Cell order:
 # ╠═2b3d5460-2896-11eb-00d3-0d595c4a44e9
 # ╟─6a57d0b0-2898-11eb-15f1-4dddef3c0290
@@ -172,7 +138,3 @@ md"The eigenvalues of the first matrix ``A`` are all less than zero, so ϵ goes 
 # ╟─62c26f20-289f-11eb-37b5-5f6520356f22
 # ╠═7b59961c-289f-11eb-1552-3b964b75241d
 # ╟─b8460b54-28eb-11eb-1619-cdffe8ba2c7c
-# ╟─1d571a0e-28a3-11eb-266b-376c24ce94d4
-# ╠═5a9cb546-28a2-11eb-2e02-f7aa2c556e96
-# ╠═a75c9d26-28a2-11eb-3ef0-7b4ca9ba4992
-# ╟─f430386a-28aa-11eb-3414-c98891f0ea7c
