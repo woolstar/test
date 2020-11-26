@@ -50,7 +50,9 @@ Suppliments
 
 - [Least Squares](./amath301_W04L10_Fit.jl)
 - [Polynomial Fits](./amath301_W04L11_Splines.jl)
-- Data Fitting
+- [Data Fitting](./amath301_W04L12_DataFit.jl)
+
+The suppliment on functions seems a repeat of Week 1 functions suppliment.
 
 #### Week 5 - Optimization
 
