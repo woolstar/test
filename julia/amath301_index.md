@@ -56,6 +56,12 @@ The suppliment on functions seems a repeat of Week 1 functions suppliment.
 
 #### Week 5 - Optimization
 
+( Lecture links : http://courses.washington.edu/am301/page2/page14/video.html )
+
+- General Optimization
+- Derivative Optimization
+- Genetic Algorithms
+
 #### Week 6 - Numerical Integration and Differentiation
 
 #### Week 7 - Differential Equations
