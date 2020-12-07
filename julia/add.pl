@@ -4,7 +4,8 @@ use 5.012 ;
 
 use vars qw($go) ;
 
-my %modules ;
+## dependencies baked into this script
+my %modules = ( Dates => undef, Pluto => undef ) ;
 
 sub cat
 {
@@ -14,10 +15,9 @@ sub cat
 }
 
 for ( <*.jl> ) { @modules { map { /using ([A-Z]\w+)/gm } cat($_) }= undef ; }
- unless ( $go ) { say "add $_" for ( sort keys %modules ) }
- say "" unless $go ;
- say "using $_" for ( sort keys %modules ) ;
+ unless ( $go ) { say "]" ;  say "add $_" for ( sort keys %modules ) ; exit 0 }
 
-say "using Dates\nusing Pluto\nDates.now()" if $go ;
-say "Pluto.run()" if $go ; 
+say "using $_" for ( sort keys %modules ) ;
+say "println( Dates.now() )" ;
+say "Pluto.run()" ;
 

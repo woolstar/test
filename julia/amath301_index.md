@@ -58,8 +58,8 @@ The suppliment on functions seems a repeat of Week 1 functions suppliment.
 
 ( Lecture links : http://courses.washington.edu/am301/page2/page14/video.html )
 
-- General Optimization
-- Derivative Optimization
+- [General Optimization](./amath301_W05L13_Optimization.jl)
+- [Derivative Optimization](./amath301_W05L14_Unconstrained.jl)
 - Genetic Algorithms
 
 #### Week 6 - Numerical Integration and Differentiation
