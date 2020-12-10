@@ -60,7 +60,7 @@ The suppliment on functions seems a repeat of Week 1 functions suppliment.
 
 - [General Optimization](./amath301_W05L13_Optimization.jl)
 - [Derivative Optimization](./amath301_W05L14_Unconstrained.jl)
-- Genetic Algorithms
+- [Genetic Algorithms](./amath301_W05L15_LinProg.jl)
 
 #### Week 6 - Numerical Integration and Differentiation
 
