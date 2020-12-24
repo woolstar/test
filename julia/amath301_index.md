@@ -64,6 +64,16 @@ The suppliment on functions seems a repeat of Week 1 functions suppliment.
 
 #### Week 6 - Numerical Integration and Differentiation
 
+( Lecture links and suppliments : http://courses.washington.edu/am301/page3/page7/video.html )
+
+- [Numerical Differentiation](./amath301_W06L16_FiniteDiff.jl)
+- [Higher Order Differentiation](./amath301_W06L17_Diffs.jl)
+- [Integration](./amath301_W06L18_Integration.jl)
+
+Supliments
+
+- Mean Value Theorem
+
 #### Week 7 - Differential Equations
 
 #### Week 8 - Differential Equations
