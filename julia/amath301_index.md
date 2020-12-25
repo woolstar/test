@@ -70,11 +70,21 @@ The suppliment on functions seems a repeat of Week 1 functions suppliment.
 - [Higher Order Differentiation](./amath301_W06L17_Diffs.jl)
 - [Integration](./amath301_W06L18_Integration.jl)
 
-Supliments
+Suppliment
 
 - Mean Value Theorem
 
 #### Week 7 - Differential Equations
+
+(Lecture links and suppliments : http://courses.washington.edu/am301/page3/page8/video.html )
+
+- [Time Stepping ODEs](./amath301_W07L19_TimeStep)
+- Error and Stability
+- General Schemes
+
+Suppliment
+
+- Using Runge-Kutta Methods
 
 #### Week 8 - Differential Equations
 

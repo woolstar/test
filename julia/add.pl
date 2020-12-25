@@ -14,8 +14,8 @@ sub cat
     <FH>
 }
 
-for ( <*.jl> ) { @modules { map { /using ([A-Z]\w+)/gm } cat($_) }= undef ; }
- unless ( $go ) { say "]" ;  say "add $_" for ( sort keys %modules ) ; exit 0 }
+for ( <*.jl> ) { @modules { grep !/Base/, map { /using ([A-Z]\w+)/gm } cat($_) }= undef ; }
+ unless ( $go ) { say "]" ;  say "add $_" for ( sort keys %modules ) ; say "" ;  exit 0 }
 
 say "using $_" for ( sort keys %modules ) ;
 say "println( Dates.now() )" ;
