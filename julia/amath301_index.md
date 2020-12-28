@@ -79,12 +79,12 @@ Suppliment
 (Lecture links and suppliments : http://courses.washington.edu/am301/page3/page8/video.html )
 
 - [Time Stepping ODEs](./amath301_W07L19_TimeStep)
-- Error and Stability
-- General Schemes
+- [Error and Stability](./amath301_W07L20_Stability.jl)
+- General Schemes to reduce error
 
 Suppliment
 
-- Using Runge-Kutta Methods
+- [Using Runge-Kutta Methods](./amath301_W07S01_ODESolve.jl)
 
 #### Week 8 - Differential Equations
 

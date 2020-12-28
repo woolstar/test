@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.17
+# v0.12.18
 
 using Markdown
 using InteractiveUtils
@@ -24,7 +24,7 @@ end
 md"So as before, we want to work with numerical data which we're going to derive from a real function, but I'm going to go even more funky than I did last time, and go with something that's more positive than negative.  Lets say,
 
 ```math
-f(x)=sin(x)+\frac{1}5 sin^2(5x+\pi / 6)
+f(x)=\sin(x)+\frac{1}5 \sin^2(5x+\pi / 6)
 ```
 
 which looks as ugly as you'd expect.
@@ -59,8 +59,8 @@ end
 # ╔═╡ 1cf08dc6-45b7-11eb-1178-cb6de6602b1c
 md"At a course setting, the left and right results are far apart, but if we turn ``\Delta t`` down several of orders of magnetude, we get the same result as evaluating the true integral which is
 ```math
-\int_{0}^{2\pi}f(x) dx
-   =\frac{x+\pi/30}{10}-cos(x)-\frac{1}{100}sin(10x+\pi/3)\bigg\rvert_0^{2\pi}
+\int_{0}^{2\pi}f(x)\, dx
+   =\frac{x+\pi/30}{10}-\cos(x)-\frac{1}{100}\sin(10x+\pi/3)\bigg\rvert_0^{2\pi}
 ```
 
 Across the range ``[0,2\pi]`` the trig functions cancel out, leaving just ``x/10``, or
@@ -85,7 +85,7 @@ md"This is pretty close, but we can try to get closer.
 Simpson's rule says that, for an integral across three points ``x_0,x_1,x_2``, we can approximate the integral:
 
 ```math
-\int_{x_0}^{x_2}f(x)dx = \frac{\Delta x}3(f(x_0)+4f(x_1)+f(x_2))
+\int_{x_0}^{x_2}f(x)\,dx = \frac{\Delta x}3(f(x_0)+4f(x_1)+f(x_2))
 	+ \mathcal{O}(\Delta x^5) + \cdots 
 ```
 

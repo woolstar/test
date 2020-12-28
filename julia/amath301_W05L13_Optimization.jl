@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.17
+# v0.12.18
 
 using Markdown
 using InteractiveUtils
@@ -22,7 +22,7 @@ md"---
 So it all starts with data or a function we're looking for the bottom of.  Say for example
 
 ```math
-f_{ugly}(x)= x^4 +10x sin(x^2)
+f_{ugly}(x)= x^4 +10x \sin(x^2)
 ```
 which looks something like"
 
@@ -42,7 +42,7 @@ f(x_l) > f(x_h) &: x_{lower} \leftarrow x_l \\
 f(x_l) \leq f(x_h) &: x_{upper} \leftarrow x_h
 \end{align}
 ```
-and repeat until the interval is small enough.  Done arbitrarily, we have to evaluate ``f`` twice at each step.  However the mathmetician [Kiefer](https://en.wikipedia.org/wiki/Jack_Kiefer_(statistician)) proposed picking the spacing between the bounds and samples, so that the points could be reused.  IE, if the various spacing between our points:
+and repeat until the interval is small enough.  Done arbitrarily, we have to evaluate ``f`` twice at each step.  However the mathmetician [Kiefer](https://en.wikipedia.org/wiki/Jack_Kiefer_(statistician)) proposed picking the spacing between the bounds and samples so that the points could be reused.  IE, if the various spacing between our points:
 ```math
 \begin{align}
 l &= x_{upper} - x_{lower} \\
@@ -107,6 +107,7 @@ x_min= golden_section( f, -2, 1 )
 
 # ╔═╡ 06583c22-376f-11eb-19be-9dc8c388f6b4
 let
+	plotly()
 	plot( -1.4:.01:-1.1, f, lab="f" )
 	scatter!( [x_min], [f(x_min)], lab="x_min" )	
 end
