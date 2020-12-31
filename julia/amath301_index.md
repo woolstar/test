@@ -84,9 +84,18 @@ Suppliment
 
 Suppliment
 
-- [Using Runge-Kutta Methods](./amath301_W07S01_ODESolve.jl)
+- [Using 4th Order Solver](./amath301_W07S01_ODESolve.jl)
 
-#### Week 8 - Differential Equations
+#### Week 8 - Advanced Differential Equations
+
+(Lecture links and suppliments : http://courses.washington.edu/am301/page3/page9/video.html )
+
+- [Runge Kutta](./amath301_W08L22_RungeKutta.jl)
+
+Suppliment
+
+- [Functions](./amath301_W01S04_Functions.jl)  * repeat from week 1
+- [Phase Plots](./amath301_W08S01_PhasePlot.jl)
 
 #### Week 9 - Singular Value Decomposition
 

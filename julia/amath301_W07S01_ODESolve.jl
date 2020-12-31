@@ -31,23 +31,22 @@ Of course we first break it up into ``x`` and ``v``, and so we end up with
    \left ( \matrix{ v \\ \mu(1-x^2)v-x } \right )
 ```
 
-`DifferentialEquations` wants our function to be written in terms if ``u``, ``p``, ``t`` (our coordinates, optional parameters, and time).  In this case, as our system of equations are independent, we can further optimize, and create a form which takes the output as a parameter as well.
+`DifferentialEquations` wants our function to be written in terms if ``u``, ``p``, ``t`` (our coordinates, optional parameters, and time).  In this case, as our system of equations are independent, we'd just like to write out the equations above, so using a handy macro from `ParameterizedFunctions`, we can write:
 "
 
 # ╔═╡ b40ffe3a-48cd-11eb-11dc-a16f43cfa49d
 begin
-	function vdp!(du,u,p,t)
-		μ= p
-		du[1]= u[2]
-		du[2]= μ*(1-u[1]^2)*u[2] - u[1]
-	end
+	vdp= @ode_def begin
+		dx= y
+		dy= μ*(1-x^2)*y -x
+	end μ
 end
 
 # ╔═╡ 489c15f0-4943-11eb-2038-258706a375d9
 let
 	μ= 7
 	u₀= [-1.5, 6]
-	prob= ODEProblem( vdp!, u₀, (0., 40.), ( μ ) )
+	prob= ODEProblem( vdp, u₀, (0., 40.), ( μ ) )
 	sol= solve( prob )
 	plotly()
 	plot( sol, vars=(0,1,2) )
@@ -59,9 +58,9 @@ let
 	gr()
 	graph= scatter( [0.], [0.], lab= "" )
 	
-	for i in 1:80
+	for i in 1:50
 		u₀= 2 * rand( 2 ) .- 1
-		prob_vdp= ODEProblem( vdp!, u₀, t, ( 1.8 ) )
+		prob_vdp= ODEProblem( vdp, u₀, t, ( 1.8 ) )
 		sol= solve( prob_vdp )
 		plot!( graph, sol, vars=(1,2), lab="" )
 	end
