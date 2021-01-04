@@ -58,7 +58,7 @@ let
 	gr()
 	graph= scatter( [0.], [0.], lab= "" )
 	
-	for i in 1:50
+	for i in 1:20
 		u₀= 2 * rand( 2 ) .- 1
 		prob_vdp= ODEProblem( vdp, u₀, t, ( 1.8 ) )
 		sol= solve( prob_vdp )

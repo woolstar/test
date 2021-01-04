@@ -91,6 +91,8 @@ Suppliment
 (Lecture links and suppliments : http://courses.washington.edu/am301/page3/page9/video.html )
 
 - [Runge Kutta](./amath301_W08L22_RungeKutta.jl)
+- [Simulation Performance](./amath301_W08L23_Performance.jl)
+- Double Pendulum
 
 Suppliment
 
