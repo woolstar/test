@@ -99,6 +99,10 @@ Suppliment
 - [Functions](./amath301_W01S04_Functions.jl)  * repeat from week 1
 - [Phase Plots](./amath301_W08S01_PhasePlot.jl)
 
+Extra reference:
+
+[Comparison of Integrators (double pendulum) PDF](http://courses.washington.edu/am301/pdf/MAE541_PRES.pdf)
+
 #### Week 9 - Singular Value Decomposition
 
 #### Week 10 - Fast Fourier Transform
