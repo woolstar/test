@@ -16,12 +16,12 @@ end
 
 # ╔═╡ e084ea70-5179-11eb-2449-f7d4ba86b3b6
 begin
-	function jnorm(A)
-		norm(A)
-	end
+	jnorm(A) = norm(A)
+	jsumnorm(A) = sqrt( sum( abs2, A ))
+	jblasnorm(A) = LinearAlgebra.BLAS.nrm2(A)
 	
 	function jnaivnorm(A)
-		∑= 0.
+		∑= zero(eltype(A))
 		for i ∈ A
 			∑ += i * i
 		end
@@ -29,7 +29,7 @@ begin
 	end
 	
 	function jsimdnorm(A)
-		∑= 0.
+		∑= zero(eltype(A))
 		@simd for i ∈ A
 			∑ += i * i
 		end
@@ -37,29 +37,26 @@ begin
 	end
 	
 	function javxnorm(A)
-		∑= 0.
+		∑= zero(eltype(A))
 		@avx for i ∈ eachindex(A)
 			∑ += A[i] * A[i]
 		end
 		sqrt( ∑ )
-	end
-	
-	function jsumnorm(A)
-		sqrt( sum( abs2, A ))
 	end
 end
 		
 
 # ╔═╡ 2c55099e-517a-11eb-2e72-f9681bf2a702
 let
-	U= rand(64)
-	i= 80 ; j= 50
+	U= rand(128)
+	i= 80 ; j= 500
 
 	( @benchmark jnorm($U) samples=i evals=j ),
+	( @benchmark jblasnorm($U) samples=i evals=j ),
+	( @benchmark jsumnorm($U) samples=i evals=j ),
 	( @benchmark jnaivnorm($U) samples=i evals=j ),
 	( @benchmark jsimdnorm($U) samples=i evals=j ),
 	( @benchmark javxnorm($U) samples=i evals=j ),
-	( @benchmark jsumnorm($U) samples=i evals=j ),
 	jnorm(U) ≈ jnaivnorm(U)
 end
 
@@ -77,9 +74,11 @@ begin
 		times= Float64[]
 		for n in range
 			U= rand(n)
-			perf= @benchmark $f($U) samples=200 evals=8
-			t= sort(perf.times)
-			push!(times, max(1, sum(t[1:4]))/(4. * n ))
+			ks= (n>64) ? 40 : 200
+			ke= (n>256) ? 4 : ((n > 80 ) ? 20 : 1000 )
+			perf= @benchmark $f($U) samples=ks evals=ke
+			T= sort(perf.times)
+			push!(times, max(1, sum(T[1:4]))/(4. * n ))
 		end
 		times
 	end
@@ -87,12 +86,12 @@ end
 
 # ╔═╡ 4c6b074e-517d-11eb-3d89-050dca9918b2
 let
-	range= 16:16:1024
+	range= 8:12:384
 	
 	U= [ bench_range( jnorm, range ) ;
 		bench_range( jsumnorm, range ) ;
 		bench_range( jsimdnorm, range ) ;
-		bench_range( javxnorm, range )			
+		bench_range( javxnorm, range )
 		]
 	T= reshape( U , size(range,1), : )
 	plot( range, T, lab=["norm" "sum" "simd" "avx"] )
