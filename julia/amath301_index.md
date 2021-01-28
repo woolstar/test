@@ -92,12 +92,13 @@ Suppliment
 
 - [Runge Kutta](./amath301_W08L22_RungeKutta.jl)
 - [Simulation Performance](./amath301_W08L23_Performance.jl)
-- Double Pendulum
+- Double Gyre
 
 Suppliment
 
 - [Functions](./amath301_W01S04_Functions.jl)  * repeat from week 1
 - [Phase Plots](./amath301_W08S01_PhasePlot.jl)
+- [Double Pendulum](./amath301_W08S02_DoublePendulum.jl)
 
 Extra reference:
 
@@ -107,4 +108,14 @@ Extra reference:
 
 #### Week 10 - Fast Fourier Transform
 
+(Lecture links and suppliments : http://courses.washington.edu/am301/page4/page12/video.html )
+
+- [Fourier Transform](./amath301_w10L28_Fourier.jl)
+- [Fast Fourier Transform](./amath301_W10L29_FFT.jl)
+- Image Compression
+
+Suppliments
+
+- [Live audio FFT](./amath301_W10S01_AudioFFT.jl)
+- [Discrete Fourier Transform](./amath301_W10S02_DFT.jl)
 
