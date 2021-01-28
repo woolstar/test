@@ -48,7 +48,7 @@ end
 
 # ╔═╡ 2c55099e-517a-11eb-2e72-f9681bf2a702
 let
-	U= rand(128)
+	U= rand(1024)
 	i= 80 ; j= 500
 
 	( @benchmark jnorm($U) samples=i evals=j ),
@@ -86,7 +86,7 @@ end
 
 # ╔═╡ 4c6b074e-517d-11eb-3d89-050dca9918b2
 let
-	range= 8:12:384
+	range= 16:16:384
 	
 	U= [ bench_range( jnorm, range ) ;
 		bench_range( jsumnorm, range ) ;
