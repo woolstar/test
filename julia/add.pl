@@ -15,7 +15,7 @@ sub cat
 }
 
 for ( <*.jl> ) { @modules { grep !/Base/, map { /using ([A-Z]\w+)/gm } cat($_) }= undef ; }
- unless ( $go ) { say "]" ;  say "add $_" for ( sort keys %modules ) ; say "" ;  exit 0 }
+unless ( $go ) { say "using Pkg" ;  say "Pkg.add( [" . join(',', map { qq{"$_"} } sort keys %modules ), "])" ;  exit 0 }
 
 say "using $_" for ( sort keys %modules ) ;
 say "println( Dates.now() )" ;
