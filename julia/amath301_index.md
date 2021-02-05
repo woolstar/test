@@ -106,6 +106,12 @@ Extra reference:
 
 #### Week 9 - Singular Value Decomposition
 
+(Lecture links : http://courses.washington.edu/am301/page1/page15/video.html )
+
+- Singular Value Decomposition (svd)
+- Principal Component Analysis (pca, variances and covariances)
+- Facial Recognition
+
 #### Week 10 - Fast Fourier Transform
 
 (Lecture links and suppliments : http://courses.washington.edu/am301/page4/page12/video.html )
